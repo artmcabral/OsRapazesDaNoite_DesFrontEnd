@@ -1,21 +1,31 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TarefaCard } from './tarefa-card';
+import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import type { Prioridade, Status, Tarefa } from '../../../tipos';
 
-describe('TarefaCard', () => {
-  let component: TarefaCard;
-  let fixture: ComponentFixture<TarefaCard>;
+@Component({
+  selector: 'app-tarefa-card',
+  imports: [RouterLink],
+  templateUrl: './tarefa-card.html',
+  styleUrl: './tarefa-card.css',
+})
+export class TarefaCard {
+  tarefa = input.required<Tarefa>();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TarefaCard],
-    }).compileComponents();
+  rotuloStatus: Record<Status, string> = {
+    'a-fazer': 'A fazer',
+    'em-andamento': 'Em andamento',
+    'em-revisao': 'Em revisão',
+    'concluida': 'Concluída',
+  };
 
-    fixture = TestBed.createComponent(TarefaCard);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+  rotuloPrioridade: Record<Prioridade, string> = {
+    baixa: 'Baixa',
+    media: 'Média',
+    alta: 'Alta',
+  };
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  formatarData(data: string): string {
+    const [ano, mes, dia] = data.split('-');
+    return `${dia}/${mes}/${ano}`;
+  }
+}
