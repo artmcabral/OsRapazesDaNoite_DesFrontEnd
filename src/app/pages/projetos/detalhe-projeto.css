@@ -1,0 +1,16 @@
+.lista-tarefas {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.lista-tarefas li {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.lista-tarefas h4 {
+  margin-top: 0;
+}

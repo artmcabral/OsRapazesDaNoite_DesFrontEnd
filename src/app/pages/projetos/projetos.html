@@ -1,0 +1,28 @@
+<section>
+  <h2>Projetos</h2>
+
+  @if (carregando()) {
+    <p>Carregando projetos...</p>
+  } @else if (erro()) {
+    <p role="alert">{{ erro() }}</p>
+  } @else {
+    <ul class="lista-projetos">
+      @for (projeto of projetos(); track projeto.id) {
+        <li>
+          <article>
+            <h3>
+              <a [routerLink]="['/projetos', projeto.id]">
+                {{ projeto.nome }}
+              </a>
+            </h3>
+            <p>{{ projeto.descricao }}</p>
+            <p><strong>Disciplina:</strong> {{ projeto.disciplina }}</p>
+            <p><strong>Criado em:</strong> {{ projeto.criadoEm }}</p>
+          </article>
+        </li>
+      } @empty {
+        <li>Nenhum projeto cadastrado.</li>
+      }
+    </ul>
+  }
+</section>

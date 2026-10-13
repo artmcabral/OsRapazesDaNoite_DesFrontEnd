@@ -1,0 +1,20 @@
+.lista-projetos {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.lista-projetos article {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.lista-projetos h3 {
+  margin-top: 0;
+}
+
+.lista-projetos a {
+  color: #1d4ed8;
+}

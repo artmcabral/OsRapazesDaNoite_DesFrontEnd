@@ -1,0 +1,31 @@
+<section>
+  @if (carregando()) {
+    <p>Carregando projeto...</p>
+  } @else if (erro()) {
+    <p role="alert">{{ erro() }}</p>
+  } @else if (projeto(); as p) {
+    <a routerLink="/projetos">Voltar para projetos</a>
+
+    <h2>{{ p.nome }}</h2>
+    <p>{{ p.descricao }}</p>
+    <p><strong>Disciplina:</strong> {{ p.disciplina }}</p>
+    <p><strong>Criado em:</strong> {{ p.criadoEm }}</p>
+
+    <h3>Tarefas do projeto</h3>
+
+    <ul class="lista-tarefas">
+      @for (tarefa of p.tarefas; track tarefa.id) {
+        <li>
+          <h4>{{ tarefa.titulo }}</h4>
+          <p>{{ tarefa.descricao }}</p>
+          <p><strong>Status:</strong> {{ tarefa.status }}</p>
+          <p><strong>Prioridade:</strong> {{ tarefa.prioridade }}</p>
+          <p><strong>Responsável:</strong> {{ tarefa.responsavel }}</p>
+          <p><strong>Prazo:</strong> {{ tarefa.prazo }}</p>
+        </li>
+      } @empty {
+        <li>Este projeto ainda não possui tarefas.</li>
+      }
+    </ul>
+  }
+</section>
