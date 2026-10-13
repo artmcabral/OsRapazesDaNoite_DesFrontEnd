@@ -1,8 +1,10 @@
 import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import type { Prioridade, Status, Tarefa } from '../../../tipos';
 
 @Component({
   selector: 'app-tarefa-card',
+  imports: [RouterLink],
   templateUrl: './tarefa-card.html',
   styleUrl: './tarefa-card.css',
 })
