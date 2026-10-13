@@ -1,0 +1,24 @@
+
+<main class="detalhe">
+  <a routerLink="/tarefas" class="voltar">← Voltar para tarefas</a>
+
+  @if (carregando()) {
+    <p role="status">Carregando detalhes da tarefa...</p>
+  } @else if (erro()) {
+    <p role="alert">{{ erro() }}</p>
+  } @else if (tarefa(); as t) {
+    <article class="cartao-detalhe">
+      <h1>{{ t.titulo }}</h1>
+
+      <p class="descricao">{{ t.descricao }}</p>
+
+      <section class="informacoes">
+        <p><strong>Status:</strong> {{ t.status }}</p>
+        <p><strong>Prioridade:</strong> {{ t.prioridade }}</p>
+        <p><strong>Responsável:</strong> {{ t.responsavel }}</p>
+        <p><strong>Prazo:</strong> {{ t.prazo }}</p>
+        <p><strong>ID do projeto:</strong> {{ t.projetoId }}</p>
+      </section>
+    </article>
+  }
+</main>

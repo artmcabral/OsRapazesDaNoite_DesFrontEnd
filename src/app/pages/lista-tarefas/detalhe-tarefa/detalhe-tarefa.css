@@ -1,0 +1,44 @@
+
+.detalhe {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.voltar {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.voltar:hover {
+  text-decoration: underline;
+}
+
+.cartao-detalhe {
+  padding: 24px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.cartao-detalhe h1 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+.descricao {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.informacoes {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.informacoes p {
+  margin: 12px 0;
+}
