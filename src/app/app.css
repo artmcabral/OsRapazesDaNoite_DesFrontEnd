@@ -1,0 +1,41 @@
+.cabecalho {
+  background: #244536;
+  color: white;
+  padding: 16px 24px;
+}
+
+.cabecalho h1 {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+.cabecalho nav {
+  display: flex;
+  gap: 20px;
+}
+
+.cabecalho a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cabecalho a:hover {
+  text-decoration: underline;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+@media (max-width: 600px) {
+  .cabecalho {
+    padding: 16px;
+  }
+
+  main {
+    padding: 16px;
+  }
+}
