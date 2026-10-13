@@ -1,0 +1,17 @@
+<section>
+  <h2>Tarefas</h2>
+
+  @if (carregando()) {
+    <p>Carregando…</p>
+  } @else if (erro()) {
+    <p role="alert">{{ erro() }}</p>
+  } @else {
+    <ul class="lista">
+      @for (t of tarefas(); track t.id) {
+        <li><app-tarefa-card [tarefa]="t" /></li>
+      } @empty {
+        <li>Nenhuma tarefa cadastrada.</li>
+      }
+    </ul>
+  }
+</section>
