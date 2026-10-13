@@ -1,0 +1,34 @@
+.cartao {
+  border: 1px solid #d0d7de;
+  border-left: 6px solid #8c959f;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.cartao h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.cartao dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.cartao dt {
+  font-size: 0.75rem;
+  color: #57606a;
+}
+
+.cartao dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.status-a-fazer      { border-left-color: #8c959f; }
+.status-em-andamento { border-left-color: #0969da; }
+.status-em-revisao   { border-left-color: #bf8700; }
+.status-concluida    { border-left-color: #1a7f37; }

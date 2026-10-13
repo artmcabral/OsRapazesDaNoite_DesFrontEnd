@@ -1,0 +1,22 @@
+<article class="cartao" [class]="'status-' + tarefa().status">
+  <h3>{{ tarefa().titulo }}</h3>
+
+  <dl>
+    <div>
+      <dt>Status</dt>
+      <dd>{{ rotuloStatus[tarefa().status] }}</dd>
+    </div>
+    <div>
+      <dt>Prioridade</dt>
+      <dd>{{ rotuloPrioridade[tarefa().prioridade] }}</dd>
+    </div>
+    <div>
+      <dt>Responsável</dt>
+      <dd>{{ tarefa().responsavel }}</dd>
+    </div>
+    <div>
+      <dt>Prazo</dt>
+      <dd><time [attr.datetime]="tarefa().prazo">{{ formatarData(tarefa().prazo) }}</time></dd>
+    </div>
+  </dl>
+</article>
