@@ -1,16 +1,54 @@
-<section>
+ <section>
   <h2>Tarefas</h2>
+
+  <div class="filtros">
+    <label for="busca">Buscar por título ou responsável</label>
+    <input
+      id="busca"
+      type="search"
+      placeholder="Digite para pesquisar..."
+      [value]="busca()"
+      (input)="atualizarBusca($any($event.target).value)"
+    />
+
+    <label for="status">Filtrar por status</label>
+    <select
+      id="status"
+      [value]="statusSelecionado()"
+      (change)="atualizarStatus($any($event.target).value)"
+    >
+      <option value="">Todos os status</option>
+      <option value="a-fazer">A fazer</option>
+      <option value="em-andamento">Em andamento</option>
+      <option value="em-revisao">Em revisão</option>
+      <option value="concluida">Concluída</option>
+    </select>
+
+    <label for="prioridade">Filtrar por prioridade</label>
+    <select
+      id="prioridade"
+      [value]="prioridadeSelecionada()"
+      (change)="atualizarPrioridade($any($event.target).value)"
+    >
+      <option value="">Todas as prioridades</option>
+      <option value="baixa">Baixa</option>
+      <option value="media">Média</option>
+      <option value="alta">Alta</option>
+    </select>
+  </div>
 
   @if (carregando()) {
     <p>Carregando…</p>
   } @else if (erro()) {
     <p role="alert">{{ erro() }}</p>
   } @else {
+    <p>{{ tarefasFiltradas().length }} tarefa(s) encontrada(s).</p>
+
     <ul class="lista">
-      @for (t of tarefas(); track t.id) {
+      @for (t of tarefasFiltradas(); track t.id) {
         <li><app-tarefa-card [tarefa]="t" /></li>
       } @empty {
-        <li>Nenhuma tarefa cadastrada.</li>
+        <li>Nenhuma tarefa encontrada.</li>
       }
     </ul>
   }
