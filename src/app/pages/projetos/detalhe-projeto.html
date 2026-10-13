@@ -15,14 +15,7 @@
 
     <ul class="lista-tarefas">
       @for (tarefa of p.tarefas; track tarefa.id) {
-        <li>
-          <h4>{{ tarefa.titulo }}</h4>
-          <p>{{ tarefa.descricao }}</p>
-          <p><strong>Status:</strong> {{ tarefa.status }}</p>
-          <p><strong>Prioridade:</strong> {{ tarefa.prioridade }}</p>
-          <p><strong>Responsável:</strong> {{ tarefa.responsavel }}</p>
-          <p><strong>Prazo:</strong> {{ tarefa.prazo }}</p>
-        </li>
+        <li><app-tarefa-card [tarefa]="tarefa" /></li>
       } @empty {
         <li>Este projeto ainda não possui tarefas.</li>
       }

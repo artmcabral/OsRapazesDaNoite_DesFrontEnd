@@ -2,10 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
 import type { ProjetoComTarefas } from '../../services/api';
+import { TarefaCard } from '../../components/tarefa-card/tarefa-card'; 
 
 @Component({
   selector: 'app-detalhe-projeto',
-  imports: [RouterLink],
+  imports: [RouterLink, TarefaCard], 
   templateUrl: './detalhe-projeto.html',
   styleUrl: './detalhe-projeto.css',
 })
