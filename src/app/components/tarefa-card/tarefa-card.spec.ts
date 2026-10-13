@@ -1,31 +1,43 @@
-import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import type { Prioridade, Status, Tarefa } from '../../../tipos';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { TarefaCard } from './tarefa-card';
+import type { Tarefa } from '../../../tipos';
 
-@Component({
-  selector: 'app-tarefa-card',
-  imports: [RouterLink],
-  templateUrl: './tarefa-card.html',
-  styleUrl: './tarefa-card.css',
-})
-export class TarefaCard {
-  tarefa = input.required<Tarefa>();
+const tarefaExemplo: Tarefa = {
+  id: '1',
+  projetoId: '1',
+  titulo: 'Criar o repositório',
+  descricao: 'Repositório da equipe no GitHub',
+  status: 'em-andamento',
+  prioridade: 'alta',
+  responsavel: 'Ana',
+  prazo: '2026-10-06',
+};
 
-  rotuloStatus: Record<Status, string> = {
-    'a-fazer': 'A fazer',
-    'em-andamento': 'Em andamento',
-    'em-revisao': 'Em revisão',
-    'concluida': 'Concluída',
-  };
+describe('TarefaCard', () => {
+  let component: TarefaCard;
+  let fixture: ComponentFixture<TarefaCard>;
 
-  rotuloPrioridade: Record<Prioridade, string> = {
-    baixa: 'Baixa',
-    media: 'Média',
-    alta: 'Alta',
-  };
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TarefaCard],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
-  formatarData(data: string): string {
-    const [ano, mes, dia] = data.split('-');
-    return `${dia}/${mes}/${ano}`;
-  }
-}
+    fixture = TestBed.createComponent(TarefaCard);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('tarefa', tarefaExemplo);
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('mostra o título, o status com rótulo e o prazo formatado', () => {
+    const texto = (fixture.nativeElement as HTMLElement).textContent;
+    expect(texto).toContain('Criar o repositório');
+    expect(texto).toContain('Em andamento');
+    expect(texto).toContain('06/10/2026');
+  });
+});
