@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="enviar()">
+  <label>
+    Título
+    <input formControlName="titulo" />
+  </label>
+
+  <label>
+    Descrição
+    <textarea formControlName="descricao"></textarea>
+  </label>
+
+  <label>
+    Projeto
+    <select formControlName="projetoId">
+      <option value="" disabled>Escolha um projeto</option>
+      @for (p of projetos(); track p.id) {
+        <option [value]="p.id">{{ p.nome }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Status
+    <select formControlName="status">
+      @for (o of statusOpcoes; track o.valor) {
+        <option [value]="o.valor">{{ o.rotulo }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Prioridade
+    <select formControlName="prioridade">
+      @for (o of prioridadeOpcoes; track o.valor) {
+        <option [value]="o.valor">{{ o.rotulo }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Responsável
+    <input formControlName="responsavel" />
+  </label>
+
+  <label>
+    Prazo
+    <input type="date" formControlName="prazo" />
+  </label>
+
+  <button type="submit">Salvar</button>
+</form>
