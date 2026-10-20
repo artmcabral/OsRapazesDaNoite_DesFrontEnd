@@ -20,3 +20,11 @@ input, select, textarea {
   color: #b00020;
   font-size: 0.9rem;
 }
+
+.erro::before {
+  content: "⚠ ";
+}
+
+[aria-invalid="true"] {
+  border: 2px solid #b00020;
+}

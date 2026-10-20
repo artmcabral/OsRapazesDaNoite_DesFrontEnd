@@ -1,8 +1,9 @@
-import { Component, OnInit, inject, input, output, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Api } from '../../services/api';
 import type { NovaTarefa, Prioridade, Projeto, Status, Tarefa } from '../../../tipos';
+
 
 type CampoObrigatorio = 'titulo' | 'projetoId' | 'responsavel' | 'prazo';
 
@@ -16,6 +17,7 @@ export class FormularioTarefa implements OnInit {
   private fb = inject(FormBuilder);
   private api = inject(Api);
   private router = inject(Router);
+  private host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   tarefa = input<Tarefa | null>(null);
   salvar = output<NovaTarefa>();
@@ -45,11 +47,22 @@ export class FormularioTarefa implements OnInit {
     responsavel: ['', Validators.required],
     prazo: ['', Validators.required],
   });
-  
+
   mostrarErro(campo: CampoObrigatorio): boolean {
     const controle = this.form.controls[campo];
     return controle.invalid && controle.touched;
   }
+
+  private focarPrimeiroInvalido() {
+    const nome = Object.keys(this.form.controls).find(
+      (campo) => this.form.get(campo)?.invalid,
+    );
+    if (!nome) return;
+
+    this.host.nativeElement
+      .querySelector<HTMLElement>(`[formcontrolname="${nome}"]`)
+      ?.focus();
+  }  
 
   async ngOnInit() {
     this.projetos.set(await this.api.listarProjetos());
@@ -61,6 +74,7 @@ export class FormularioTarefa implements OnInit {
   async enviar() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.focarPrimeiroInvalido();
       return;
     }
 
