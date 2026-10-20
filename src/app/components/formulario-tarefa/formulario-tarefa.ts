@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Api } from '../../services/api';
 import type { NovaTarefa, Prioridade, Projeto, Status, Tarefa } from '../../../tipos';
 
+type CampoObrigatorio = 'titulo' | 'projetoId' | 'responsavel' | 'prazo';
+
 @Component({
   selector: 'app-formulario-tarefa',
   imports: [ReactiveFormsModule],
@@ -20,6 +22,7 @@ export class FormularioTarefa implements OnInit {
 
   projetos = signal<Projeto[]>([]);
   enviando = signal(false);
+
   readonly statusOpcoes: { valor: Status; rotulo: string }[] = [
     { valor: 'a-fazer', rotulo: 'A fazer' },
     { valor: 'em-andamento', rotulo: 'Em andamento' },
@@ -42,6 +45,11 @@ export class FormularioTarefa implements OnInit {
     responsavel: ['', Validators.required],
     prazo: ['', Validators.required],
   });
+  
+  mostrarErro(campo: CampoObrigatorio): boolean {
+    const controle = this.form.controls[campo];
+    return controle.invalid && controle.touched;
+  }
 
   async ngOnInit() {
     this.projetos.set(await this.api.listarProjetos());

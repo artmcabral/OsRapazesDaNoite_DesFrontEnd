@@ -14,3 +14,9 @@ input, select, textarea {
   padding: 0.5rem;
   font: inherit;
 }
+
+.erro {
+  margin: -0.5rem 0 0;
+  color: #b00020;
+  font-size: 0.9rem;
+}
