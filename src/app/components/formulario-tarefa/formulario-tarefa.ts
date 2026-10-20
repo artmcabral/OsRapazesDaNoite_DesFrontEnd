@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Api } from '../../services/api';
 import type { NovaTarefa, Prioridade, Projeto, Status, Tarefa } from '../../../tipos';
 
@@ -12,6 +13,7 @@ import type { NovaTarefa, Prioridade, Projeto, Status, Tarefa } from '../../../t
 export class FormularioTarefa implements OnInit {
   private fb = inject(FormBuilder);
   private api = inject(Api);
+  private router = inject(Router);
 
   tarefa = input<Tarefa | null>(null);
   salvar = output<NovaTarefa>();
@@ -48,11 +50,26 @@ export class FormularioTarefa implements OnInit {
     if (atual) this.form.patchValue(atual);
   }
 
-  enviar() {
+  async enviar() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    this.salvar.emit(this.form.getRawValue());
+
+    const dadosFormulario = this.form.getRawValue();
+    this.salvar.emit(dadosFormulario);
+
+    try {
+      const atual = this.tarefa();
+      if (atual) {
+        await this.api.atualizarTarefa(atual.id, dadosFormulario);
+      } else {
+        await this.api.criarTarefa(dadosFormulario);
+      }
+      
+      this.router.navigate(['/projetos', dadosFormulario.projetoId]);
+    } catch (erro) {
+      console.error('Erro ao salvar a tarefa:', erro);
+    }
   }
 }
