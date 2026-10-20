@@ -19,7 +19,7 @@ export class FormularioTarefa implements OnInit {
   salvar = output<NovaTarefa>();
 
   projetos = signal<Projeto[]>([]);
-
+  enviando = signal(false);
   readonly statusOpcoes: { valor: Status; rotulo: string }[] = [
     { valor: 'a-fazer', rotulo: 'A fazer' },
     { valor: 'em-andamento', rotulo: 'Em andamento' },
@@ -56,6 +56,8 @@ export class FormularioTarefa implements OnInit {
       return;
     }
 
+    this.enviando.set(true);
+
     const dadosFormulario = this.form.getRawValue();
     this.salvar.emit(dadosFormulario);
 
@@ -66,10 +68,12 @@ export class FormularioTarefa implements OnInit {
       } else {
         await this.api.criarTarefa(dadosFormulario);
       }
-      
+
       this.router.navigate(['/projetos', dadosFormulario.projetoId]);
     } catch (erro) {
       console.error('Erro ao salvar a tarefa:', erro);
+    } finally {
+      this.enviando.set(false);
     }
   }
 }
