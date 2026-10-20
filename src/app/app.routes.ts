@@ -22,7 +22,7 @@ export const routes: Routes = [
     title: 'Nova Tarefa',
   },
   {
-    path: 'tarefas/editar/:id',
+    path: 'tarefas/:id/editar',
     component: FormularioTarefa,
     title: 'Editar Tarefa',
   },

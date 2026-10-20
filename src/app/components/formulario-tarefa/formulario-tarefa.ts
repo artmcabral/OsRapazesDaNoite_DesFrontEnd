@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Api } from '../../services/api';
 import type { NovaTarefa, Prioridade, Projeto, Status, Tarefa } from '../../../tipos';
 
@@ -17,6 +17,7 @@ export class FormularioTarefa implements OnInit {
   private fb = inject(FormBuilder);
   private api = inject(Api);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   tarefa = input<Tarefa | null>(null);
@@ -24,7 +25,7 @@ export class FormularioTarefa implements OnInit {
 
   projetos = signal<Projeto[]>([]);
   enviando = signal(false);
-
+  private tarefaAtual: Tarefa | null = null;
   readonly statusOpcoes: { valor: Status; rotulo: string }[] = [
     { valor: 'a-fazer', rotulo: 'A fazer' },
     { valor: 'em-andamento', rotulo: 'Em andamento' },
@@ -67,8 +68,15 @@ export class FormularioTarefa implements OnInit {
   async ngOnInit() {
     this.projetos.set(await this.api.listarProjetos());
 
-    const atual = this.tarefa();
-    if (atual) this.form.patchValue(atual);
+    const id = this.route.snapshot.paramMap.get('id');
+    this.tarefaAtual = this.tarefa() ?? (id ? await this.api.buscarTarefa(id) : null);
+
+    if (this.tarefaAtual) {
+      this.form.patchValue(this.tarefaAtual);
+    } else {
+      const projetoId = this.route.snapshot.queryParamMap.get('projetoId');
+      if (projetoId) this.form.patchValue({ projetoId });
+    }
   }
 
   async enviar() {
@@ -84,7 +92,7 @@ export class FormularioTarefa implements OnInit {
     this.salvar.emit(dadosFormulario);
 
     try {
-      const atual = this.tarefa();
+      const atual = this.tarefaAtual;
       if (atual) {
         await this.api.atualizarTarefa(atual.id, dadosFormulario);
       } else {
