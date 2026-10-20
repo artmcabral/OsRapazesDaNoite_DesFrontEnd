@@ -1,10 +1,10 @@
-
 import { Routes } from '@angular/router';
 import { NaoEncontrada } from './paginas/nao-encontrada/nao-encontrada';
 import { ListaTarefas } from './pages/lista-tarefas/lista-tarefas';
 import { DetalheTarefa } from './pages/lista-tarefas/detalhe-tarefa/detalhe-tarefa';
 import { Projetos } from './pages/projetos/projetos';
 import { DetalheProjeto } from './pages/projetos/detalhe-projeto';
+import { FormularioTarefa } from './components/formulario-tarefa/formulario-tarefa';
 
 export const routes: Routes = [
   {
@@ -15,6 +15,16 @@ export const routes: Routes = [
   {
     path: 'tarefas',
     component: ListaTarefas,
+  },
+  {
+    path: 'tarefas/nova',
+    component: FormularioTarefa,
+    title: 'Nova Tarefa',
+  },
+  {
+    path: 'tarefas/editar/:id',
+    component: FormularioTarefa,
+    title: 'Editar Tarefa',
   },
   {
     path: 'tarefas/:id',

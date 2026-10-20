@@ -4,20 +4,41 @@
   } @else if (erro()) {
     <p role="alert">{{ erro() }}</p>
   } @else if (projeto(); as p) {
-    <a routerLink="/projetos">Voltar para projetos</a>
+    <a routerLink="/projetos" class="link-voltar">⬅ Voltar para projetos</a>
 
     <h2>{{ p.nome }}</h2>
     <p>{{ p.descricao }}</p>
     <p><strong>Disciplina:</strong> {{ p.disciplina }}</p>
     <p><strong>Criado em:</strong> {{ p.criadoEm }}</p>
 
-    <h3>Tarefas do projeto</h3>
+    <!-- CONTAINER DO CABEÇALHO DAS TAREFAS -->
+    <div class="cabecalho-tarefas">
+      <h3>Tarefas do projeto</h3>
+      <a 
+        class="btn-primario" 
+        routerLink="/tarefas/nova" 
+        [queryParams]="{ projetoId: p.id }"
+        title="Adicionar uma nova tarefa a este projeto">
+        + Nova Tarefa
+      </a>
+    </div>
 
     <ul class="lista-tarefas">
       @for (tarefa of p.tarefas; track tarefa.id) {
-        <li><app-tarefa-card [tarefa]="tarefa" /></li>
+        <li class="item-tarefa">
+          <app-tarefa-card [tarefa]="tarefa" />
+          <a 
+            class="btn-editar" 
+            [routerLink]="['/tarefas/editar', tarefa.id]"
+            title="Editar esta tarefa">
+            ✏️ Editar
+          </a>
+        </li>
       } @empty {
-        <li>Este projeto ainda não possui tarefas.</li>
+        <!-- Mensagem de vazio mais convidativa -->
+        <li class="tarefa-vazia">
+          Este projeto ainda não possui tarefas. Clique no botão "Nova Tarefa" acima para começar!
+        </li>
       }
     </ul>
   }

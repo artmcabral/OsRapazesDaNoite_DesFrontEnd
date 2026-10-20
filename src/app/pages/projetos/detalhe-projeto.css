@@ -5,3 +5,56 @@
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
 }
+
+/* Alinha o título "Tarefas do projeto" e o botão "Nova Tarefa" lado a lado */
+.cabecalho-tarefas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+/* Estilo do botão para criar nova tarefa */
+.btn-primario {
+  background-color: #0056b3;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.btn-primario:hover {
+  background-color: #004494;
+}
+
+/* Visual para a mensagem quando o projeto não tem tarefas */
+.tarefa-vazia {
+  color: #666;
+  font-style: italic;
+  padding: 1.5rem;
+  grid-column: 1 / -1; /* Faz a mensagem ocupar toda a largura do grid */
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+}
+
+/* Link de voltar para a listagem */
+.link-voltar {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-voltar:hover {
+  text-decoration: underline;
+}
