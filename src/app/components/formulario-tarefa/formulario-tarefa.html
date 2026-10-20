@@ -1,10 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="enviar()">
-  <label>
+   <label>
     Título
-    <input formControlName="titulo" />
+    <input
+      formControlName="titulo"
+      [attr.aria-invalid]="mostrarErro('titulo')"
+      [attr.aria-describedby]="mostrarErro('titulo') ? 'erro-titulo' : null"
+    />
   </label>
   @if (mostrarErro('titulo')) {
-    <p class="erro">Informe o título.</p>
+    <p class="erro" id="erro-titulo">Informe o título.</p>
   }
 
   <label>
@@ -12,9 +16,13 @@
     <textarea formControlName="descricao"></textarea>
   </label>
 
-  <label>
+    <label>
     Projeto
-    <select formControlName="projetoId">
+    <select
+      formControlName="projetoId"
+      [attr.aria-invalid]="mostrarErro('projetoId')"
+      [attr.aria-describedby]="mostrarErro('projetoId') ? 'erro-projeto' : null"
+    >
       <option value="" disabled>Escolha um projeto</option>
       @for (p of projetos(); track p.id) {
         <option [value]="p.id">{{ p.nome }}</option>
@@ -22,7 +30,7 @@
     </select>
   </label>
   @if (mostrarErro('projetoId')) {
-    <p class="erro">Escolha um projeto.</p>
+    <p class="erro" id="erro-projeto">Escolha um projeto.</p>
   }
 
   <label>
@@ -45,18 +53,27 @@
 
   <label>
     Responsável
-    <input formControlName="responsavel" />
+    <input
+      formControlName="responsavel"
+      [attr.aria-invalid]="mostrarErro('responsavel')"
+      [attr.aria-describedby]="mostrarErro('responsavel') ? 'erro-responsavel' : null"
+    />
   </label>
   @if (mostrarErro('responsavel')) {
-    <p class="erro">Informe o responsável.</p>
+    <p class="erro" id="erro-responsavel">Informe o responsável.</p>
   }
 
-  <label>
+    <label>
     Prazo
-    <input type="date" formControlName="prazo" />
+    <input
+      type="date"
+      formControlName="prazo"
+      [attr.aria-invalid]="mostrarErro('prazo')"
+      [attr.aria-describedby]="mostrarErro('prazo') ? 'erro-prazo' : null"
+    />
   </label>
   @if (mostrarErro('prazo')) {
-    <p class="erro">Informe o prazo.</p>
+    <p class="erro" id="erro-prazo">Informe o prazo.</p>
   }
 
   <button type="submit" [disabled]="enviando()">
