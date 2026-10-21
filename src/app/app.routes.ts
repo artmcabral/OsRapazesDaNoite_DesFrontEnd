@@ -1,3 +1,4 @@
+import { FormularioProjeto } from './components/formulario-projeto/formulario-projeto';
 import { Routes } from '@angular/router';
 import { NaoEncontrada } from './paginas/nao-encontrada/nao-encontrada';
 import { ListaTarefas } from './pages/lista-tarefas/lista-tarefas';
@@ -19,24 +20,31 @@ export const routes: Routes = [
   {
     path: 'tarefas/nova',
     component: FormularioTarefa,
-    title: 'Nova Tarefa',
-  },
-  {
-    path: 'tarefas/:id/editar',
-    component: FormularioTarefa,
-    title: 'Editar Tarefa',
   },
   {
     path: 'tarefas/:id',
     component: DetalheTarefa,
   },
   {
+    path: 'tarefas/:id/editar',
+    component: FormularioTarefa,
+  },
+  {
     path: 'projetos',
     component: Projetos,
+  },
+
+  {
+    path: 'projetos/novo',
+    component: FormularioProjeto,
   },
   {
     path: 'projetos/:id',
     component: DetalheProjeto,
+  },
+  {
+    path: 'projetos/:id/editar',
+    component: FormularioProjeto,
   },
   {
     path: '**',
