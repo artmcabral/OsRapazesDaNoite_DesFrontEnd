@@ -43,6 +43,20 @@
   font-weight: 600;
 }
 
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.filtros label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-weight: 600;
+}
 .status-a-fazer      { border-left-color: #8c959f; }
 .status-em-andamento { border-left-color: #0969da; }
 .status-em-revisao   { border-left-color: #bf8700; }
