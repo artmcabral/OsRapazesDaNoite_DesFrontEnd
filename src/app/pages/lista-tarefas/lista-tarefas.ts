@@ -2,12 +2,13 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { Api } from '../../services/api';
 import { FiltrosService } from '../../services/filtros';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
+import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
 import type { Tarefa } from '../../../tipos';
-import { filtrarTarefas, type Filtros } from '../../../derivar';
+import { filtrarTarefas } from '../../../derivar';
 
 @Component({
   selector: 'app-lista-tarefas',
-  imports: [TarefaCard],
+  imports: [TarefaCard, BarraFiltros],
   templateUrl: './lista-tarefas.html',
   styleUrl: './lista-tarefas.css',
 })
@@ -19,9 +20,9 @@ export class ListaTarefas implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  filtros = this.filtrosService.filtros;
-
-  tarefasFiltradas = computed(() => filtrarTarefas(this.tarefas(), this.filtros()));
+  tarefasFiltradas = computed(() =>
+    filtrarTarefas(this.tarefas(), this.filtrosService.filtros()),
+  );
 
   async ngOnInit() {
     try {
@@ -31,17 +32,5 @@ export class ListaTarefas implements OnInit {
     } finally {
       this.carregando.set(false);
     }
-  }
-
-  atualizarBusca(valor: string) {
-    this.filtrosService.alterar({ busca: valor });
-  }
-
-  atualizarStatus(valor: string) {
-    this.filtrosService.alterar({ status: valor as Filtros['status'] });
-  }
-
-  atualizarPrioridade(valor: string) {
-    this.filtrosService.alterar({ prioridade: valor as Filtros['prioridade'] });
   }
 }
