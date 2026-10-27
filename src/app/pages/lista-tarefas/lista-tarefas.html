@@ -1,4 +1,4 @@
- <section>
+<section>
   <h2>Tarefas</h2>
 
   <div class="filtros">
@@ -7,17 +7,17 @@
       id="busca"
       type="search"
       placeholder="Digite para pesquisar..."
-      [value]="busca()"
+      [value]="filtros().busca"
       (input)="atualizarBusca($any($event.target).value)"
     />
 
     <label for="status">Filtrar por status</label>
     <select
       id="status"
-      [value]="statusSelecionado()"
+      [value]="filtros().status"
       (change)="atualizarStatus($any($event.target).value)"
     >
-      <option value="">Todos os status</option>
+      <option value="todos">Todos os status</option>
       <option value="a-fazer">A fazer</option>
       <option value="em-andamento">Em andamento</option>
       <option value="em-revisao">Em revisão</option>
@@ -27,10 +27,10 @@
     <label for="prioridade">Filtrar por prioridade</label>
     <select
       id="prioridade"
-      [value]="prioridadeSelecionada()"
+      [value]="filtros().prioridade"
       (change)="atualizarPrioridade($any($event.target).value)"
     >
-      <option value="">Todas as prioridades</option>
+      <option value="todas">Todas as prioridades</option>
       <option value="baixa">Baixa</option>
       <option value="media">Média</option>
       <option value="alta">Alta</option>
