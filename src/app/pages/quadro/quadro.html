@@ -1,0 +1,64 @@
+
+<section class="pagina-quadro">
+
+  <h2>Quadro de tarefas</h2>
+
+  <!-- Filtros compartilhados com a lista -->
+  <app-filtros-tarefas />
+
+  @if (carregando()) {
+
+    <p>Carregando tarefas...</p>
+
+  } @else if (erro()) {
+
+    <p role="alert">{{ erro() }}</p>
+
+  } @else {
+
+    <p>
+      {{ tarefasFiltradas().length }}
+      tarefa(s) encontrada(s).
+    </p>
+
+    <div class="quadro">
+
+      @for (coluna of colunas; track coluna.status) {
+
+        <section class="coluna">
+
+          <h3>
+            {{ coluna.titulo }}
+            ({{ tarefasDaColuna(coluna.status).length }})
+          </h3>
+
+          <ul class="lista-coluna">
+
+            @for (
+              tarefa of tarefasDaColuna(coluna.status);
+              track tarefa.id
+            ) {
+
+              <li>
+                <app-tarefa-card [tarefa]="tarefa" />
+              </li>
+
+            } @empty {
+
+              <li class="vazio">
+                Nenhuma tarefa nesta coluna.
+              </li>
+
+            }
+
+          </ul>
+
+        </section>
+
+      }
+
+    </div>
+
+  }
+
+</section>

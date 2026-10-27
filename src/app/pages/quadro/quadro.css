@@ -1,0 +1,64 @@
+
+.pagina-quadro {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Estrutura principal do quadro */
+.quadro {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+/* Colunas organizadas por status */
+.coluna {
+  background-color: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 0;
+}
+
+/* Titulo da coluna */
+.coluna h3 {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #24292f;
+}
+
+/* Lista de cartões */
+.lista-coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mensagem de coluna vazia */
+.vazio {
+  color: #57606a;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+}
+
+/* Responsividade para tablets */
+@media (max-width: 1000px) {
+  .quadro {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Responsividade para celulares */
+@media (max-width: 600px) {
+  .quadro {
+    grid-template-columns: 1fr;
+  }
+}
