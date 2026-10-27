@@ -6,6 +6,7 @@ import { DetalheTarefa } from './pages/lista-tarefas/detalhe-tarefa/detalhe-tare
 import { Projetos } from './pages/projetos/projetos';
 import { DetalheProjeto } from './pages/projetos/detalhe-projeto';
 import { FormularioTarefa } from './components/formulario-tarefa/formulario-tarefa';
+import { Quadro } from './pages/quadro/quadro';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,6 @@ export const routes: Routes = [
     path: 'projetos',
     component: Projetos,
   },
-
   {
     path: 'projetos/novo',
     component: FormularioProjeto,
@@ -45,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'projetos/:id/editar',
     component: FormularioProjeto,
+  },
+  {
+    path: 'quadro',
+    component: Quadro,
   },
   {
     path: '**',

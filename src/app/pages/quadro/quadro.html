@@ -1,0 +1,48 @@
+<div class="quadro-container">
+  <h2>Quadro de Tarefas (Kanban)</h2>
+
+  <div *ngIf="carregando()" class="loading">
+    A carregar tarefas...
+  </div>
+
+  <div *ngIf="!carregando()" class="colunas-grid">
+    <!-- Coluna: A Fazer -->
+    <div class="coluna">
+      <h3>A Fazer ({{ aFazer().length }})</h3>
+      <div class="cards-list">
+        <div *ngFor="let tarefa of aFazer()" class="card-item">
+          <h4>{{ tarefa.titulo }}</h4>
+          <p>{{ tarefa.descricao }}</p>
+          <span class="badge">{{ tarefa.responsavel }}</span>
+        </div>
+        <p *ngIf="aFazer().length === 0" class="empty">Nenhuma tarefa</p>
+      </div>
+    </div>
+
+    <!-- Coluna: Em Andamento -->
+    <div class="coluna">
+      <h3>Em Andamento ({{ emAndamento().length }})</h3>
+      <div class="cards-list">
+        <div *ngFor="let tarefa of emAndamento()" class="card-item">
+          <h4>{{ tarefa.titulo }}</h4>
+          <p>{{ tarefa.descricao }}</p>
+          <span class="badge">{{ tarefa.responsavel }}</span>
+        </div>
+        <p *ngIf="emAndamento().length === 0" class="empty">Nenhuma tarefa</p>
+      </div>
+    </div>
+
+    <!-- Coluna: Concluídas -->
+    <div class="coluna">
+      <h3>Concluídas ({{ concluidas().length }})</h3>
+      <div class="cards-list">
+        <div *ngFor="let tarefa of concluidas()" class="card-item">
+          <h4>{{ tarefa.titulo }}</h4>
+          <p>{{ tarefa.descricao }}</p>
+          <span class="badge">{{ tarefa.responsavel }}</span>
+        </div>
+        <p *ngIf="concluidas().length === 0" class="empty">Nenhuma tarefa</p>
+      </div>
+    </div>
+  </div>
+</div>

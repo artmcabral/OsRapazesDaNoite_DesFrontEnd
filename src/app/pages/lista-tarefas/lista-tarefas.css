@@ -1,13 +1,127 @@
-section {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 1rem;
+/* Fontes e reset básico */
+body {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333333;
+  margin: 0;
 }
 
-.lista {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+/* Conteúdo Principal */
+.container, .quadro-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+h2, .titulo-pagina {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1b4332;
+  margin-bottom: 1.5rem;
+}
+
+/* Área de Filtros */
+.filtros-container {
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.filtros-container input,
+.filtros-container select {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filtros-container input:focus,
+.filtros-container select:focus {
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+}
+
+.contador-resultados {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+/* Grid de Cards (Tarefas) */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Card Individual */
+.card-tarefa {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  position: relative;
+  border-left: 5px solid #2d6a4f; /* Borda padrão verde */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-tarefa:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Variações de cor da borda lateral pelo status/prioridade */
+.card-tarefa.status-concluida { border-left-color: #2d6a4f; }
+.card-tarefa.status-andamento { border-left-color: #1d3557; }
+.card-tarefa.status-revisao { border-left-color: #d97706; }
+
+.card-tarefa h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.card-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  color: #8c98a4;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.info-valor {
+  color: #212529;
+  font-weight: 600;
 }
