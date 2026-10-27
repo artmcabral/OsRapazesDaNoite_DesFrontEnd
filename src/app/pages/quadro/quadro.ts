@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Api } from '../../services/api';
 import { FiltrosService } from '../../services/filtros';
 import { filtrarTarefas } from '../../../derivar';
+import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
 
 @Component({
   selector: 'app-quadro',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BarraFiltros],
   templateUrl: './quadro.html',
   styleUrl: './quadro.css'
 })
