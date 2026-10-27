@@ -1,7 +1,9 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { Api } from '../../services/api';
+import { FiltrosService } from '../../services/filtros';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
-import type { Tarefa, Status, Prioridade } from '../../../tipos';
+import type { Tarefa } from '../../../tipos';
+import { filtrarTarefas, type Filtros } from '../../../derivar';
 
 @Component({
   selector: 'app-lista-tarefas',
@@ -11,32 +13,15 @@ import type { Tarefa, Status, Prioridade } from '../../../tipos';
 })
 export class ListaTarefas implements OnInit {
   private api = inject(Api);
+  private filtrosService = inject(FiltrosService);
 
   tarefas = signal<Tarefa[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  busca = signal('');
-  statusSelecionado = signal('');
-  prioridadeSelecionada = signal('');
+  filtros = this.filtrosService.filtros;
 
-  tarefasFiltradas = computed(() => {
-    const texto = this.busca().toLowerCase().trim();
-    const status = this.statusSelecionado();
-    const prioridade = this.prioridadeSelecionada();
-
-    return this.tarefas().filter((tarefa) => {
-      const correspondeBusca =
-        tarefa.titulo.toLowerCase().includes(texto) ||
-        tarefa.responsavel.toLowerCase().includes(texto);
-
-      const correspondeStatus = !status || tarefa.status === status;
-      const correspondePrioridade =
-        !prioridade || tarefa.prioridade === prioridade;
-
-      return correspondeBusca && correspondeStatus && correspondePrioridade;
-    });
-  });
+  tarefasFiltradas = computed(() => filtrarTarefas(this.tarefas(), this.filtros()));
 
   async ngOnInit() {
     try {
@@ -49,14 +34,14 @@ export class ListaTarefas implements OnInit {
   }
 
   atualizarBusca(valor: string) {
-    this.busca.set(valor);
+    this.filtrosService.alterar({ busca: valor });
   }
 
   atualizarStatus(valor: string) {
-    this.statusSelecionado.set(valor);
+    this.filtrosService.alterar({ status: valor as Filtros['status'] });
   }
 
   atualizarPrioridade(valor: string) {
-    this.prioridadeSelecionada.set(valor);
+    this.filtrosService.alterar({ prioridade: valor as Filtros['prioridade'] });
   }
 }
