@@ -1,0 +1,45 @@
+
+<div
+  class="filtros"
+  role="group"
+  aria-label="Busca e filtros de tarefas"
+>
+
+  <label>
+    Buscar por título ou responsável
+    <input
+      type="search"
+      placeholder="Digite para pesquisar..."
+      [value]="filtros.busca()"
+      (input)="filtros.busca.set($any($event.target).value)"
+    />
+  </label>
+
+  <label>
+    Filtrar por status
+    <select
+      [value]="filtros.statusSelecionado()"
+      (change)="filtros.statusSelecionado.set($any($event.target).value)"
+    >
+      <option value="">Todos os status</option>
+      <option value="a-fazer">A fazer</option>
+      <option value="em-andamento">Em andamento</option>
+      <option value="em-revisao">Em revisão</option>
+      <option value="concluida">Concluída</option>
+    </select>
+  </label>
+
+  <label>
+    Filtrar por prioridade
+    <select
+      [value]="filtros.prioridadeSelecionada()"
+      (change)="filtros.prioridadeSelecionada.set($any($event.target).value)"
+    >
+      <option value="">Todas as prioridades</option>
+      <option value="baixa">Baixa</option>
+      <option value="media">Média</option>
+      <option value="alta">Alta</option>
+    </select>
+  </label>
+
+</div>
