@@ -66,4 +66,15 @@ export class Quadro implements OnInit {
       this.carregando.set(false);
     }
   }
+
+  // Atualiza o status da tarefa no quadro após salvar na API
+  aoAlterarStatus(tarefaAtualizada: Tarefa) {
+    this.tarefas.update((tarefas) =>
+      tarefas.map((tarefa) =>
+        tarefa.id === tarefaAtualizada.id
+          ? tarefaAtualizada
+          : tarefa
+      )
+    );
+  }
 }

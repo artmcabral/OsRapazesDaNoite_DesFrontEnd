@@ -27,6 +27,7 @@ export class ListaTarefas implements OnInit {
     return this.filtros.filtrar(this.tarefas());
   });
 
+  // Carrega as tarefas da API
   async ngOnInit() {
     try {
       this.tarefas.set(await this.api.listarTarefas());
@@ -37,5 +38,16 @@ export class ListaTarefas implements OnInit {
     } finally {
       this.carregando.set(false);
     }
+  }
+
+  // Atualiza a tarefa na lista após salvar na API
+  aoAlterarStatus(tarefaAtualizada: Tarefa) {
+    this.tarefas.update((tarefas) =>
+      tarefas.map((tarefa) =>
+        tarefa.id === tarefaAtualizada.id
+          ? tarefaAtualizada
+          : tarefa
+      )
+    );
   }
 }

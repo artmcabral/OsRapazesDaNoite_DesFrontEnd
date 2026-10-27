@@ -1,36 +1,79 @@
 
-<a
-  class="link-cartao"
-  [routerLink]="['/tarefas', tarefa().id]"
-  [attr.aria-label]="'Ver detalhes da tarefa: ' + tarefa().titulo"
+<article
+  class="cartao"
+  [class]="'status-' + tarefa().status"
 >
-  <article class="cartao" [class]="'status-' + tarefa().status">
-    <h3>{{ tarefa().titulo }}</h3>
 
-    <dl>
-      <div>
-        <dt>Status</dt>
-        <dd>{{ rotuloStatus[tarefa().status] }}</dd>
-      </div>
+  <!-- Título com link para detalhes -->
+  <h3>
+    <a
+      class="link-cartao"
+      [routerLink]="['/tarefas', tarefa().id]"
+      [attr.aria-label]="'Ver detalhes da tarefa: ' + tarefa().titulo"
+    >
+      {{ tarefa().titulo }}
+    </a>
+  </h3>
 
-      <div>
-        <dt>Prioridade</dt>
-        <dd>{{ rotuloPrioridade[tarefa().prioridade] }}</dd>
-      </div>
+  <dl>
 
-      <div>
-        <dt>Responsável</dt>
-        <dd>{{ tarefa().responsavel }}</dd>
-      </div>
+    <div>
+      <dt>Prioridade</dt>
+      <dd>
+        {{ rotuloPrioridade[tarefa().prioridade] }}
+      </dd>
+    </div>
 
-      <div>
-        <dt>Prazo</dt>
-        <dd>
-          <time [attr.datetime]="tarefa().prazo">
-            {{ formatarData(tarefa().prazo) }}
-          </time>
-        </dd>
-      </div>
-    </dl>
-  </article>
-</a>
+    <div>
+      <dt>Responsável</dt>
+      <dd>{{ tarefa().responsavel }}</dd>
+    </div>
+
+    <div>
+      <dt>Prazo</dt>
+      <dd>
+        <time [attr.datetime]="tarefa().prazo">
+          {{ formatarData(tarefa().prazo) }}
+        </time>
+      </dd>
+    </div>
+
+  </dl>
+
+  <!-- Seletor de status -->
+  <label class="controle-status">
+
+    Status
+
+    <select
+      [value]="tarefa().status"
+      [disabled]="salvando()"
+      (change)="alterarStatus($any($event.target).value, $any($event.target))"
+    >
+
+      @for (
+        opcao of statusDisponiveis;
+        track opcao.valor
+      ) {
+        <option [value]="opcao.valor">
+          {{ opcao.rotulo }}
+        </option>
+      }
+
+    </select>
+
+  </label>
+
+  @if (salvando()) {
+    <p role="status" class="aviso">
+      Salvando status...
+    </p>
+  }
+
+  @if (erro()) {
+    <p role="alert" class="erro">
+      {{ erro() }}
+    </p>
+  }
+
+</article>

@@ -1,12 +1,14 @@
+
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
 import type { ProjetoComTarefas } from '../../services/api';
-import { TarefaCard } from '../../components/tarefa-card/tarefa-card'; 
+import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
+import type { Tarefa } from '../../../tipos';
 
 @Component({
   selector: 'app-detalhe-projeto',
-  imports: [RouterLink, TarefaCard], 
+  imports: [RouterLink, TarefaCard],
   templateUrl: './detalhe-projeto.html',
   styleUrl: './detalhe-projeto.css',
 })
@@ -18,6 +20,7 @@ export class DetalheProjeto implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
+  // Carrega os dados do projeto
   async ngOnInit() {
     const id = this.rota.snapshot.paramMap.get('id');
 
@@ -34,5 +37,24 @@ export class DetalheProjeto implements OnInit {
     } finally {
       this.carregando.set(false);
     }
+  }
+
+  // Atualiza o status da tarefa na página do projeto
+  aoAlterarStatus(tarefaAtualizada: Tarefa) {
+    this.projeto.update((projeto) => {
+
+      if (!projeto) {
+        return projeto;
+      }
+
+      return {
+        ...projeto,
+        tarefas: projeto.tarefas.map((tarefa) =>
+          tarefa.id === tarefaAtualizada.id
+            ? tarefaAtualizada
+            : tarefa
+        )
+      };
+    });
   }
 }

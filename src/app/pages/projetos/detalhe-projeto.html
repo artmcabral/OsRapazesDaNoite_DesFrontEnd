@@ -1,24 +1,29 @@
+
 <section>
   @if (carregando()) {
     <p>Carregando projeto...</p>
   } @else if (erro()) {
     <p role="alert">{{ erro() }}</p>
   } @else if (projeto(); as p) {
-    <a routerLink="/projetos" class="link-voltar">⬅ Voltar para projetos</a>
+    <a routerLink="/projetos" class="link-voltar">
+      ⬅ Voltar para projetos
+    </a>
 
     <h2>{{ p.nome }}</h2>
     <p>{{ p.descricao }}</p>
     <p><strong>Disciplina:</strong> {{ p.disciplina }}</p>
     <p><strong>Criado em:</strong> {{ p.criadoEm }}</p>
 
-    <!-- CONTAINER DO CABEÇALHO DAS TAREFAS -->
+    <!-- Cabeçalho das tarefas -->
     <div class="cabecalho-tarefas">
       <h3>Tarefas do projeto</h3>
-      <a 
-        class="btn-primario" 
-        routerLink="/tarefas/nova" 
+
+      <a
+        class="btn-primario"
+        routerLink="/tarefas/nova"
         [queryParams]="{ projetoId: p.id }"
-        title="Adicionar uma nova tarefa a este projeto">
+        title="Adicionar uma nova tarefa a este projeto"
+      >
         + Nova Tarefa
       </a>
     </div>
@@ -26,18 +31,27 @@
     <ul class="lista-tarefas">
       @for (tarefa of p.tarefas; track tarefa.id) {
         <li class="item-tarefa">
-          <app-tarefa-card [tarefa]="tarefa" />
-          <a 
-            class="btn-editar" 
+
+          <!-- Cartão com atualização de status -->
+          <app-tarefa-card
+            [tarefa]="tarefa"
+            (statusAlterado)="aoAlterarStatus($event)"
+          />
+
+          <!-- Botão de edição existente -->
+          <a
+            class="btn-editar"
             [routerLink]="['/tarefas/editar', tarefa.id]"
-            title="Editar esta tarefa">
+            title="Editar esta tarefa"
+          >
             ✏️ Editar
           </a>
+
         </li>
       } @empty {
-        <!-- Mensagem de vazio mais convidativa -->
         <li class="tarefa-vazia">
-          Este projeto ainda não possui tarefas. Clique no botão "Nova Tarefa" acima para começar!
+          Este projeto ainda não possui tarefas.
+          Clique no botão "Nova Tarefa" acima para começar!
         </li>
       }
     </ul>

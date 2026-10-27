@@ -19,7 +19,10 @@
     <ul class="lista">
       @for (t of tarefasFiltradas(); track t.id) {
         <li>
-          <app-tarefa-card [tarefa]="t" />
+          <app-tarefa-card
+            [tarefa]="t"
+            (statusAlterado)="aoAlterarStatus($event)"
+          />
         </li>
       } @empty {
         <li>Nenhuma tarefa encontrada.</li>

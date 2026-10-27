@@ -1,19 +1,5 @@
-.link-cartao {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-  border-radius: 8px;
-}
 
-.link-cartao:hover .cartao {
-  border-color: #8c959f;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
-}
-
-.link-cartao:focus-visible {
-  outline: 3px solid #0969da;
-  outline-offset: 2px;
-}.cartao {
+.cartao {
   border: 1px solid #d0d7de;
   border-left: 6px solid #8c959f;
   border-radius: 8px;
@@ -26,9 +12,28 @@
   font-size: 1.1rem;
 }
 
+/* Link para os detalhes */
+.link-cartao {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.link-cartao:hover {
+  color: #0969da;
+  text-decoration: underline;
+}
+
+.link-cartao:focus-visible {
+  outline: 3px solid #0969da;
+  outline-offset: 3px;
+}
+
+/* Informações da tarefa */
 .cartao dl {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns:
+    repeat(auto-fit, minmax(120px, 1fr));
   gap: 0.5rem;
   margin: 0;
 }
@@ -43,7 +48,59 @@
   font-weight: 600;
 }
 
-.status-a-fazer      { border-left-color: #8c959f; }
-.status-em-andamento { border-left-color: #0969da; }
-.status-em-revisao   { border-left-color: #bf8700; }
-.status-concluida    { border-left-color: #1a7f37; }
+/* Cores dos status */
+.status-a-fazer {
+  border-left-color: #8c959f;
+}
+
+.status-em-andamento {
+  border-left-color: #0969da;
+}
+
+.status-em-revisao {
+  border-left-color: #bf8700;
+}
+
+.status-concluida {
+  border-left-color: #1a7f37;
+}
+
+/* Seletor para alterar o status */
+.controle-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.controle-status select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #8c959f;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.controle-status select:focus-visible {
+  outline: 3px solid #0969da;
+  outline-offset: 2px;
+}
+
+.controle-status select:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Mensagens */
+.aviso {
+  color: #57606a;
+  font-size: 0.85rem;
+}
+
+.erro {
+  color: #b42318;
+  font-size: 0.85rem;
+}

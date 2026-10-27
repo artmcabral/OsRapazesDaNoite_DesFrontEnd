@@ -40,7 +40,10 @@
             ) {
 
               <li>
-                <app-tarefa-card [tarefa]="tarefa" />
+                <app-tarefa-card
+                  [tarefa]="tarefa"
+                  (statusAlterado)="aoAlterarStatus($event)"
+                />
               </li>
 
             } @empty {
