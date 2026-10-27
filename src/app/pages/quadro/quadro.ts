@@ -1,6 +1,8 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Api } from '../../services/api';
+import { FiltrosService } from '../../services/filtros';
+import { filtrarTarefas } from '../../../derivar';
 
 @Component({
   selector: 'app-quadro',
@@ -10,13 +12,17 @@ import { Api } from '../../services/api';
   styleUrl: './quadro.css'
 })
 export class Quadro implements OnInit {
+  private filtrosService = inject(FiltrosService);
+
   tarefas = signal<any[]>([]);
   carregando = signal<boolean>(true);
 
-  // Filtros ajustados aos nomes exatos da tua base de dados
-  aFazer = computed(() => this.tarefas().filter(t => t.status === 'A fazer' || t.status === 'a-fazer'));
-  emAndamento = computed(() => this.tarefas().filter(t => t.status === 'Em andamento' || t.status === 'Em revisão' || t.status === 'em-andamento'));
-  concluidas = computed(() => this.tarefas().filter(t => t.status === 'Concluída' || t.status === 'concluida'));
+  // Mesmo estado e mesma função de filtro da lista (#28)
+  tarefasFiltradas = computed(() => filtrarTarefas(this.tarefas(), this.filtrosService.filtros()));
+
+  aFazer = computed(() => this.tarefasFiltradas().filter(t => t.status === 'a-fazer'));
+  emAndamento = computed(() => this.tarefasFiltradas().filter(t => t.status === 'em-andamento' || t.status === 'em-revisao'));
+  concluidas = computed(() => this.tarefasFiltradas().filter(t => t.status === 'concluida'));
 
   constructor(private api: Api) {}
 
