@@ -1,0 +1,41 @@
+<div class="filtros">
+  <div class="filtro-grupo">
+    <label for="busca">Buscar por título ou responsável</label>
+    <input
+      id="busca"
+      type="search"
+      placeholder="Digite para pesquisar..."
+      [value]="filtros().busca"
+      (input)="atualizarBusca($any($event.target).value)"
+    />
+  </div>
+
+  <div class="filtro-grupo">
+    <label for="status">Filtrar por status</label>
+    <select
+      id="status"
+      [value]="filtros().status"
+      (change)="atualizarStatus($any($event.target).value)"
+    >
+      <option value="todos">Todos os status</option>
+      <option value="a-fazer">A fazer</option>
+      <option value="em-andamento">Em andamento</option>
+      <option value="em-revisao">Em revisão</option>
+      <option value="concluida">Concluída</option>
+    </select>
+  </div>
+
+  <div class="filtro-grupo">
+    <label for="prioridade">Filtrar por prioridade</label>
+    <select
+      id="prioridade"
+      [value]="filtros().prioridade"
+      (change)="atualizarPrioridade($any($event.target).value)"
+    >
+      <option value="todas">Todas as prioridades</option>
+      <option value="baixa">Baixa</option>
+      <option value="media">Média</option>
+      <option value="alta">Alta</option>
+    </select>
+  </div>
+</div>
