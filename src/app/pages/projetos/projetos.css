@@ -1,20 +1,63 @@
 .lista-projetos {
   list-style: none;
+  margin: 0;
   padding: 0;
   display: grid;
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
 }
 
 .lista-projetos article {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 16px;
+  position: relative;
+  height: 100%;
+  padding: 1.25rem 1.4rem;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-sm);
+  transition: transform var(--transicao), box-shadow var(--transicao),
+    border-color var(--transicao);
+}
+
+.lista-projetos article:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-md);
+  border-color: var(--cor-borda-forte);
 }
 
 .lista-projetos h3 {
-  margin-top: 0;
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
 }
 
-.lista-projetos a {
-  color: #1d4ed8;
+.lista-projetos h3 a {
+  color: var(--cor-texto);
+}
+
+/* Faz o card inteiro ser clicável pelo link do título */
+.lista-projetos h3 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--raio-md);
+}
+
+.lista-projetos article:hover h3 a {
+  color: var(--cor-primaria);
+}
+
+.lista-projetos p {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+}
+
+.lista-projetos p:first-of-type {
+  margin-bottom: 1rem;
+  color: var(--cor-texto);
+}
+
+.lista-projetos strong {
+  font-weight: 600;
+  color: var(--cor-texto);
 }

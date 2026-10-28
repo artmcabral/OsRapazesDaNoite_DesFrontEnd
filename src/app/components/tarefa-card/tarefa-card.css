@@ -1,63 +1,98 @@
-.link-cartao {
+:host {
   display: block;
-  color: inherit;
-  text-decoration: none;
-  border-radius: 8px;
+  height: 100%;
 }
 
-.link-cartao:hover .cartao {
-  border-color: #8c959f;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+.link-cartao {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--raio-md);
+}
+
+.link-cartao:hover {
+  color: inherit;
 }
 
 .link-cartao:focus-visible {
-  outline: 3px solid #0969da;
+  outline: 3px solid var(--cor-destaque);
   outline-offset: 2px;
-}.cartao {
-  border: 1px solid #d0d7de;
-  border-left: 6px solid #8c959f;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
+}
+
+.cartao {
+  position: relative;
+  height: 100%;
+  padding: 1.1rem 1.25rem 1.1rem 1.4rem;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-sm);
+  overflow: hidden;
+  transition: transform var(--transicao), box-shadow var(--transicao),
+    border-color var(--transicao);
+}
+
+/* Faixa colorida do status */
+.cartao::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--cor-status, var(--status-a-fazer));
+}
+
+.link-cartao:hover .cartao {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-md);
+  border-color: var(--cor-borda-forte);
 }
 
 .cartao h3 {
-  margin: 0 0 0.75rem;
-  font-size: 1.1rem;
+  margin: 0 0 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .cartao dl {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem 1rem;
   margin: 0;
 }
 
 .cartao dt {
-  font-size: 0.75rem;
-  color: #57606a;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-fraco);
+  margin-bottom: 0.15rem;
 }
 
 .cartao dd {
   margin: 0;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cor-texto);
 }
 
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
+/* Status: cor da faixa + "pílula" no primeiro valor */
+.status-a-fazer      { --cor-status: var(--status-a-fazer); }
+.status-em-andamento { --cor-status: var(--status-em-andamento); }
+.status-em-revisao   { --cor-status: var(--status-em-revisao); }
+.status-concluida    { --cor-status: var(--status-concluida); }
+
+.cartao dl > div:first-child dd {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem 1.25rem;
-  margin: 1rem 0;
+  gap: 0.4rem;
 }
 
-.filtros label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-weight: 600;
+.cartao dl > div:first-child dd::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cor-status, var(--status-a-fazer));
 }
-.status-a-fazer      { border-left-color: #8c959f; }
-.status-em-andamento { border-left-color: #0969da; }
-.status-em-revisao   { border-left-color: #bf8700; }
-.status-concluida    { border-left-color: #1a7f37; }

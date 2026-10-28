@@ -1,0 +1,39 @@
+.container {
+  max-width: 560px;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+  padding: 1.75rem;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-md);
+}
+
+.mb-3 {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.alert-danger {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+}
+
+.form-control {
+  width: 100%;
+}
+
+.d-flex {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}

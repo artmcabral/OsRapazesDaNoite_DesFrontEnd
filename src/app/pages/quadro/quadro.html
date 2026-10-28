@@ -9,7 +9,7 @@
 
   <div *ngIf="!carregando()" class="colunas-grid">
     <!-- Coluna: A Fazer -->
-    <div class="coluna">
+    <div class="coluna coluna-a-fazer">
       <h3>A Fazer ({{ aFazer().length }})</h3>
       <div class="cards-list">
         <div *ngFor="let tarefa of aFazer()" class="card-item">
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Coluna: Em Andamento -->
-    <div class="coluna">
+    <div class="coluna coluna-em-andamento">
       <h3>Em Andamento ({{ emAndamento().length }})</h3>
       <div class="cards-list">
         <div *ngFor="let tarefa of emAndamento()" class="card-item">
@@ -35,7 +35,7 @@
     </div>
 
     <!-- Coluna: Concluídas -->
-    <div class="coluna">
+    <div class="coluna coluna-concluida">
       <h3>Concluídas ({{ concluidas().length }})</h3>
       <div class="cards-list">
         <div *ngFor="let tarefa of concluidas()" class="card-item">

@@ -1,1 +1,201 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================================
+   Estilos globais — Os Rapazes da Noite
+   Variáveis de design usadas por todos os componentes
+   ========================================================= */
+:root {
+  /* Marca */
+  --cor-primaria: #244536;
+  --cor-primaria-hover: #1b3529;
+  --cor-primaria-clara: #e7f0eb;
+  --cor-destaque: #52b788;
+
+  /* Neutros */
+  --cor-fundo: #f4f6f5;
+  --cor-superficie: #ffffff;
+  --cor-borda: #e2e8e5;
+  --cor-borda-forte: #c9d3ce;
+  --cor-texto: #1f2a24;
+  --cor-texto-suave: #5b6b63;
+  --cor-texto-fraco: #8a9a92;
+
+  /* Status */
+  --status-a-fazer: #94a3b8;
+  --status-em-andamento: #3b82f6;
+  --status-em-revisao: #f59e0b;
+  --status-concluida: #22a06b;
+
+  /* Feedback */
+  --cor-erro: #c0392b;
+  --cor-erro-fundo: #fdecea;
+
+  /* Formas */
+  --raio-sm: 6px;
+  --raio-md: 10px;
+  --raio-lg: 14px;
+  --sombra-sm: 0 1px 2px rgb(16 24 20 / 0.06);
+  --sombra-md: 0 4px 12px rgb(16 24 20 / 0.08);
+  --sombra-lg: 0 10px 24px rgb(16 24 20 / 0.12);
+  --transicao: 0.18s ease;
+
+  --fonte: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  color: var(--cor-texto);
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--cor-primaria);
+  text-decoration: none;
+  transition: color var(--transicao);
+}
+
+a:hover {
+  color: var(--cor-destaque);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+/* ---------- Campos de formulário ---------- */
+input,
+select,
+textarea {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--cor-texto);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-sm);
+  padding: 0.6rem 0.8rem;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--cor-texto-fraco);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px rgb(36 69 54 / 0.15);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+::placeholder {
+  color: var(--cor-texto-fraco);
+}
+
+/* ---------- Botões ---------- */
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--raio-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transicao), border-color var(--transicao),
+    transform var(--transicao), box-shadow var(--transicao);
+}
+
+button,
+.btn-primary {
+  background: var(--cor-primaria);
+  color: #fff;
+}
+
+button:hover:not(:disabled),
+.btn-primary:hover {
+  background: var(--cor-primaria-hover);
+  color: #fff;
+  box-shadow: var(--sombra-sm);
+}
+
+button:active:not(:disabled),
+.btn:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+  border-color: var(--cor-borda-forte);
+}
+
+.btn-secondary:hover {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+/* ---------- Mensagens ---------- */
+[role='alert'],
+.alert-danger {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+  border: 1px solid #f5c2bd;
+  border-radius: var(--raio-sm);
+  padding: 0.75rem 1rem;
+}
+
+[role='status'] {
+  color: var(--cor-texto-suave);
+}
