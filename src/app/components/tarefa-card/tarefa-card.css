@@ -1,71 +1,126 @@
 
-.cartao {
-  border: 1px solid #d0d7de;
-  border-left: 6px solid #8c959f;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
+/* Estrutura do componente */
+:host {
+  display: block;
+  height: 100%;
 }
 
-.cartao h3 {
-  margin: 0 0 0.75rem;
-  font-size: 1.1rem;
-}
-
-/* Link para os detalhes */
+/* Link para os detalhes da tarefa */
 .link-cartao {
+  display: block;
   color: inherit;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: var(--raio-md, 8px);
 }
 
 .link-cartao:hover {
-  color: #0969da;
-  text-decoration: underline;
+  color: inherit;
 }
 
 .link-cartao:focus-visible {
-  outline: 3px solid #0969da;
-  outline-offset: 3px;
+  outline: 3px solid var(--cor-destaque, #0969da);
+  outline-offset: 2px;
+}
+
+/* Aparência principal do cartão */
+.cartao {
+  --cor-status: var(--status-a-fazer, #8c959f);
+
+  position: relative;
+  height: 100%;
+  padding: 1.1rem 1.25rem 1.1rem 1.4rem;
+
+  background: var(--cor-superficie, #fff);
+  border: 1px solid var(--cor-borda, #d0d7de);
+  border-radius: var(--raio-md, 8px);
+  box-shadow: var(--sombra-sm, 0 2px 5px #00000012);
+
+  overflow: hidden;
+  transition:
+    transform var(--transicao, 0.2s ease),
+    box-shadow var(--transicao, 0.2s ease),
+    border-color var(--transicao, 0.2s ease);
+}
+
+/* Faixa colorida indicando o status */
+.cartao::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 5px;
+  background: var(--cor-status);
+}
+
+/* Efeito ao passar o mouse */
+.cartao:hover {
+  box-shadow: var(--sombra-md, 0 4px 12px #00000018);
+  border-color: var(--cor-borda-forte, #8c959f);
+}
+
+/* Título da tarefa */
+.cartao h3 {
+  margin: 0 0 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 /* Informações da tarefa */
 .cartao dl {
   display: grid;
-  grid-template-columns:
-    repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem 1rem;
   margin: 0;
 }
 
 .cartao dt {
-  font-size: 0.75rem;
-  color: #57606a;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-fraco, #57606a);
+  margin-bottom: 0.15rem;
 }
 
 .cartao dd {
   margin: 0;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cor-texto, #24292f);
 }
 
-/* Cores dos status */
+/* Cores específicas dos status */
 .status-a-fazer {
-  border-left-color: #8c959f;
+  --cor-status: var(--status-a-fazer, #8c959f);
 }
 
 .status-em-andamento {
-  border-left-color: #0969da;
+  --cor-status: var(--status-em-andamento, #0969da);
 }
 
 .status-em-revisao {
-  border-left-color: #bf8700;
+  --cor-status: var(--status-em-revisao, #bf8700);
 }
 
 .status-concluida {
-  border-left-color: #1a7f37;
+  --cor-status: var(--status-concluida, #1a7f37);
 }
 
-/* Seletor para alterar o status */
+/* Indicador colorido nas informações */
+.cartao dl > div:first-child dd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cartao dl > div:first-child dd::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cor-status);
+}
+
+/* Controle para alterar o status */
 .controle-status {
   display: flex;
   flex-direction: column;
@@ -75,31 +130,37 @@
   font-weight: 600;
 }
 
+/* Seletor de status */
 .controle-status select {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #8c959f;
-  border-radius: 5px;
-  background: #fff;
+  padding: 0.6rem;
+  border: 1px solid var(--cor-borda-forte, #8c959f);
+  border-radius: var(--raio-md, 6px);
+  background: var(--cor-superficie, #fff);
+  color: var(--cor-texto, #24292f);
+  font: inherit;
   cursor: pointer;
 }
 
+/* Acessibilidade ao navegar pelo teclado */
 .controle-status select:focus-visible {
-  outline: 3px solid #0969da;
+  outline: 3px solid var(--cor-destaque, #0969da);
   outline-offset: 2px;
 }
 
+/* Estado desabilitado durante atualização */
 .controle-status select:disabled {
   opacity: 0.6;
   cursor: wait;
 }
 
-/* Mensagens */
+/* Mensagens informativas */
 .aviso {
-  color: #57606a;
+  color: var(--cor-texto-suave, #57606a);
   font-size: 0.85rem;
 }
 
+/* Mensagens de erro */
 .erro {
   color: #b42318;
   font-size: 0.85rem;

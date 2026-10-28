@@ -1,60 +1,100 @@
-.lista-tarefas {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+section > h2 {
+  margin-bottom: 0.5rem;
 }
 
-/* Alinha o título "Tarefas do projeto" e o botão "Nova Tarefa" lado a lado */
+section > p {
+  color: var(--cor-texto-suave);
+}
+
+section > p strong {
+  color: var(--cor-texto);
+  font-weight: 600;
+}
+
+.link-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cor-texto-suave);
+}
+
+.link-voltar:hover {
+  color: var(--cor-primaria);
+}
+
 .cabecalho-tarefas {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #eee;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--cor-borda);
 }
 
-/* Estilo do botão para criar nova tarefa */
+.cabecalho-tarefas h3 {
+  margin: 0;
+}
+
 .btn-primario {
-  background-color: #0056b3;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--raio-sm);
+  background: var(--cor-primaria);
+  color: #fff;
   font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-  display: inline-block;
+  font-weight: 600;
+  transition: background var(--transicao), box-shadow var(--transicao);
 }
 
 .btn-primario:hover {
-  background-color: #004494;
+  background: var(--cor-primaria-hover);
+  color: #fff;
+  box-shadow: var(--sombra-sm);
 }
 
-/* Visual para a mensagem quando o projeto não tem tarefas */
-.tarefa-vazia {
-  color: #666;
-  font-style: italic;
-  padding: 1.5rem;
-  grid-column: 1 / -1; /* Faz a mensagem ocupar toda a largura do grid */
-  text-align: center;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  border: 1px dashed #ccc;
+.lista-tarefas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
 }
 
-/* Link de voltar para a listagem */
-.link-voltar {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: #0056b3;
-  text-decoration: none;
+.item-tarefa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-editar {
+  align-self: flex-end;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--raio-sm);
+  border: 1px solid var(--cor-borda-forte);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
-.link-voltar:hover {
-  text-decoration: underline;
+.btn-editar:hover {
+  color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.tarefa-vazia {
+  grid-column: 1 / -1;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  background: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda-forte);
+  border-radius: var(--raio-md);
 }

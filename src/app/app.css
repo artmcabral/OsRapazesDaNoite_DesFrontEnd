@@ -1,41 +1,98 @@
 .cabecalho {
-  background: #244536;
-  color: white;
-  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, var(--cor-primaria) 0%, #2f5c47 100%);
+  color: #fff;
+  box-shadow: var(--sombra-md);
 }
 
-.cabecalho h1 {
-  margin: 0 0 12px;
-  font-size: 24px;
+.cabecalho-conteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.marca:hover {
+  color: #fff;
+}
+
+.marca-icone {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.12);
+  font-size: 1.1rem;
 }
 
 .cabecalho nav {
   display: flex;
-  gap: 20px;
+  gap: 0.25rem;
+  background: rgb(0 0 0 / 0.15);
+  padding: 0.25rem;
+  border-radius: 999px;
 }
 
-.cabecalho a {
-  color: white;
-  text-decoration: none;
+.cabecalho nav a {
+  color: rgb(255 255 255 / 0.8);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  transition: background var(--transicao), color var(--transicao);
+}
+
+.cabecalho nav a:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.cabecalho nav a.ativo {
+  color: var(--cor-primaria);
+  background: #fff;
   font-weight: 600;
 }
 
-.cabecalho a:hover {
-  text-decoration: underline;
-}
-
 main {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 2rem 1.5rem 3rem;
 }
 
 @media (max-width: 600px) {
-  .cabecalho {
-    padding: 16px;
+  .cabecalho-conteudo {
+    padding: 0.75rem 1rem;
+  }
+
+  .cabecalho nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cabecalho nav a {
+    flex: 1;
+    text-align: center;
+    padding: 0.45rem 0.5rem;
   }
 
   main {
-    padding: 16px;
+    padding: 1.25rem 1rem 2rem;
   }
 }

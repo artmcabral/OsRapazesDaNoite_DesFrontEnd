@@ -1,0 +1,29 @@
+.nao-encontrada {
+  max-width: 480px;
+  margin: 3rem auto;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-md);
+}
+
+.codigo {
+  margin: 0;
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cor-primaria);
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 1.4rem;
+}
+
+p {
+  color: var(--cor-texto-suave);
+  margin-bottom: 1.5rem;
+}

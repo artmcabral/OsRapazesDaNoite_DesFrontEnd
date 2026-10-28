@@ -1,13 +1,31 @@
-section {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 1rem;
+section > p {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--cor-texto-suave);
+  margin-bottom: 1rem;
 }
 
 .lista {
   list-style: none;
+  margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1rem;
+}
+
+.lista > li:only-child:not(:has(app-tarefa-card)) {
+  grid-column: 1 / -1;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  background: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda-forte);
+  border-radius: var(--raio-md);
+}
+
+@media (max-width: 600px) {
+  .lista {
+    grid-template-columns: 1fr;
+  }
 }

@@ -67,24 +67,34 @@
       "prazo": "2026-10-20"
     },
     {
-      "titulo": "aaaaaaaaaaaaaa",
-      "descricao": "bbbbbbbbbbbbbbb",
+      "id": "6",
       "projetoId": "1",
+      "titulo": "Criar a barra de busca e filtros",
+      "descricao": "Componente compartilhado entre a lista e o quadro, filtrando por título, status e prioridade",
       "status": "concluida",
-      "prioridade": "baixa",
-      "responsavel": "art",
-      "prazo": "2026-11-25",
-      "id": "Wsqq6zI05I8"
+      "prioridade": "alta",
+      "responsavel": "Bruno",
+      "prazo": "2026-10-21"
     },
     {
-      "titulo": "aaasssss",
-      "descricao": "dfsdfsfs",
+      "id": "7",
       "projetoId": "1",
-      "status": "em-revisao",
+      "titulo": "Aplicar o tema visual da aplicação",
+      "descricao": "Estilos globais com variáveis de cor, cabeçalho com navegação e cards padronizados",
+      "status": "em-andamento",
       "prioridade": "media",
-      "responsavel": "sssss",
-      "prazo": "2026-10-28",
-      "id": "Ikey-vFCvB8"
+      "responsavel": "Carla",
+      "prazo": "2026-11-04"
+    },
+    {
+      "id": "8",
+      "projetoId": "2",
+      "titulo": "Definir chaves e relacionamentos",
+      "descricao": "Chaves primárias e estrangeiras entre livro, leitor e empréstimo, com cardinalidades",
+      "status": "a-fazer",
+      "prioridade": "media",
+      "responsavel": "Diego",
+      "prazo": "2026-11-11"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

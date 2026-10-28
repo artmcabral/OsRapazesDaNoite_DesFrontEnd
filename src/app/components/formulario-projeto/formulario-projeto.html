@@ -1,0 +1,45 @@
+<div class="container my-4">
+  <h2>{{ isEdicao() ? 'Editar Projeto' : 'Novo Projeto' }}</h2>
+
+  @if (erro()) {
+    <div class="alert alert-danger mb-3">
+      {{ erro() }}
+    </div>
+  }
+
+  @if (carregando()) {
+    <p>A carregar...</p>
+  } @else {
+    <form (submit)="salvar($event)">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome do Projeto *</label>
+        <input
+          type="text"
+          id="nome"
+          class="form-control"
+          [value]="nome()"
+          (input)="nome.set($any($event.target).value)"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea
+          id="descricao"
+          class="form-control"
+          rows="3"
+          [value]="descricao()"
+          (input)="descricao.set($any($event.target).value)"
+        ></textarea>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="carregando()">
+          {{ isEdicao() ? 'Salvar Alterações' : 'Criar Projeto' }}
+        </button>
+        <a routerLink="/projetos" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  }
+</div>

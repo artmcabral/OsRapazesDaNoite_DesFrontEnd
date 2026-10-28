@@ -1,34 +1,73 @@
 
+/* Estrutura principal da página */
 .pagina-quadro {
   max-width: 1400px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-/* Estrutura principal do quadro */
+/* Organização das quatro colunas */
 .quadro {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
   margin-top: 1.5rem;
   align-items: start;
 }
 
-/* Colunas organizadas por status */
+/* Aparência das colunas */
 .coluna {
-  background-color: #f6f8fa;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
+  --cor-coluna: var(--status-a-fazer, #64748b);
+
+  background: #eaeeec;
+  border-radius: var(--raio-lg, 10px);
   padding: 1rem;
+  min-height: 420px;
   min-width: 0;
+
+  border-top: 4px solid var(--cor-coluna);
 }
 
-/* Titulo da coluna */
+/* Cores diferentes para cada status */
+.coluna:nth-child(1) {
+  --cor-coluna: var(--status-a-fazer, #64748b);
+}
+
+.coluna:nth-child(2) {
+  --cor-coluna: var(--status-em-andamento, #3b82f6);
+}
+
+.coluna:nth-child(3) {
+  --cor-coluna: var(--status-em-revisao, #eab308);
+}
+
+.coluna:nth-child(4) {
+  --cor-coluna: var(--status-concluida, #22c55e);
+}
+
+/* Títulos das colunas */
 .coluna h3 {
-  font-size: 1rem;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #24292f;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin: 0.25rem 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  color: var(--cor-texto-suave, #57606a);
+}
+
+/* Indicador colorido do status */
+.coluna h3::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--cor-coluna);
 }
 
 /* Lista de cartões */
@@ -36,17 +75,26 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* Mensagem de coluna vazia */
+/* Cada cartão ocupa sua coluna */
+.lista-coluna li {
+  min-width: 0;
+}
+
+/* Mensagem para colunas vazias */
 .vazio {
-  color: #57606a;
-  font-size: 0.9rem;
+  color: var(--cor-texto-fraco, #57606a);
+  font-size: 0.85rem;
   text-align: center;
-  padding: 1rem 0.5rem;
+
+  padding: 1.5rem 1rem;
+  border: 1px dashed var(--cor-borda-forte, #d0d7de);
+  border-radius: var(--raio-md, 8px);
 }
 
 /* Responsividade para tablets */
@@ -60,5 +108,9 @@
 @media (max-width: 600px) {
   .quadro {
     grid-template-columns: 1fr;
+  }
+
+  .coluna {
+    min-height: auto;
   }
 }

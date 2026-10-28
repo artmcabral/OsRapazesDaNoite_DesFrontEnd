@@ -7,31 +7,34 @@ import {
   signal
 } from '@angular/core';
 
+import { CommonModule } from '@angular/common';
 import { Api } from '../../services/api';
-import { FiltrosTarefas } from '../../services/filtros-tarefas';
-import { FiltrosTarefasComponent } from '../../components/filtros-tarefas/filtros-tarefas';
+import { FiltrosService } from '../../services/filtros';
+import { filtrarTarefas } from '../../../derivar';
+import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
 
 import type { Status, Tarefa } from '../../../tipos';
 
 @Component({
   selector: 'app-quadro',
-  imports: [FiltrosTarefasComponent, TarefaCard],
+  standalone: true,
+  imports: [CommonModule, BarraFiltros, TarefaCard],
   templateUrl: './quadro.html',
-  styleUrl: './quadro.css',
+  styleUrl: './quadro.css'
 })
 export class Quadro implements OnInit {
 
   private api = inject(Api);
 
-  // Compartilha os filtros com a página de lista
-  readonly filtros = inject(FiltrosTarefas);
+  // Estado compartilhado com a lista
+  readonly filtrosService = inject(FiltrosService);
 
   tarefas = signal<Tarefa[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Define as colunas do quadro
+  // Uma coluna para cada status
   readonly colunas: {
     status: Status;
     titulo: string;
@@ -42,23 +45,28 @@ export class Quadro implements OnInit {
     { status: 'concluida', titulo: 'Concluída' },
   ];
 
-  // Reutiliza os filtros da lista
-  tarefasFiltradas = computed(() => {
-    return this.filtros.filtrar(this.tarefas());
-  });
+  // Aplica a mesma função de filtros da lista
+  readonly tarefasFiltradas = computed(() =>
+    filtrarTarefas(
+      this.tarefas(),
+      this.filtrosService.filtros()
+    )
+  );
 
-  // Retorna as tarefas de cada coluna
+  // Agrupa as tarefas por status
   tarefasDaColuna(status: Status): Tarefa[] {
     return this.tarefasFiltradas().filter(
-      (tarefa) => tarefa.status === status
+      tarefa => tarefa.status === status
     );
   }
 
-  // Carrega os dados da API
+  // Busca as tarefas na API
   async ngOnInit() {
     try {
-      this.tarefas.set(await this.api.listarTarefas());
-    } catch {
+      const dados = await this.api.listarTarefas();
+      this.tarefas.set(dados);
+    } catch (erro) {
+      console.error('Erro ao carregar tarefas:', erro);
       this.erro.set(
         'Não foi possível carregar as tarefas do quadro.'
       );
@@ -67,10 +75,10 @@ export class Quadro implements OnInit {
     }
   }
 
-  // Atualiza o status da tarefa no quadro após salvar na API
+  // Atualiza a tarefa após mudança de status na API
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
-    this.tarefas.update((tarefas) =>
-      tarefas.map((tarefa) =>
+    this.tarefas.update(tarefas =>
+      tarefas.map(tarefa =>
         tarefa.id === tarefaAtualizada.id
           ? tarefaAtualizada
           : tarefa

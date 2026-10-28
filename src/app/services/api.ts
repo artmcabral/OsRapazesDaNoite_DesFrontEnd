@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import type { NovaTarefa,Projeto, Tarefa } from '../../tipos';
+import type { NovaTarefa, Projeto, Tarefa } from '../../tipos';
 
 const API = 'http://localhost:3000';
 
@@ -30,7 +30,8 @@ export class Api {
     if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
     return resposta.json() as Promise<ProjetoComTarefas>;
   }
-    private async enviar<T>(caminho: string, metodo: 'POST' | 'PATCH', corpo: unknown): Promise<T> {
+
+  private async enviar<T>(caminho: string, metodo: 'POST' | 'PATCH', corpo: unknown): Promise<T> {
     const resposta = await fetch(`${API}${caminho}`, {
       method: metodo,
       headers: { 'Content-Type': 'application/json' },

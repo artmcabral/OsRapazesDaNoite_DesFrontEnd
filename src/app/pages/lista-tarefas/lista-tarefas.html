@@ -3,13 +3,17 @@
 
   <h2>Tarefas</h2>
 
-  <!-- Filtros compartilhados -->
-  <app-filtros-tarefas />
+  <!-- Barra de busca e filtros compartilhada com o quadro -->
+  <app-barra-filtros />
 
   @if (carregando()) {
-    <p>Carregando…</p>
+
+    <p>Carregando tarefas...</p>
+
   } @else if (erro()) {
+
     <p role="alert">{{ erro() }}</p>
+
   } @else {
 
     <p>
@@ -17,16 +21,22 @@
     </p>
 
     <ul class="lista">
+
       @for (t of tarefasFiltradas(); track t.id) {
+
         <li>
           <app-tarefa-card
             [tarefa]="t"
             (statusAlterado)="aoAlterarStatus($event)"
           />
         </li>
+
       } @empty {
+
         <li>Nenhuma tarefa encontrada.</li>
+
       }
+
     </ul>
 
   }

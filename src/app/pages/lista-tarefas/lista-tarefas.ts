@@ -1,37 +1,54 @@
 
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  computed
+} from '@angular/core';
+
 import { Api } from '../../services/api';
-import { FiltrosTarefas } from '../../services/filtros-tarefas';
-import { FiltrosTarefasComponent } from '../../components/filtros-tarefas/filtros-tarefas';
+import { FiltrosService } from '../../services/filtros';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
+import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
+
 import type { Tarefa } from '../../../tipos';
+import { filtrarTarefas } from '../../../derivar';
 
 @Component({
   selector: 'app-lista-tarefas',
-  imports: [TarefaCard, FiltrosTarefasComponent],
+  imports: [TarefaCard, BarraFiltros],
   templateUrl: './lista-tarefas.html',
   styleUrl: './lista-tarefas.css',
 })
 export class ListaTarefas implements OnInit {
+
   private api = inject(Api);
 
-  // Serviço compartilhado entre lista e quadro
-  readonly filtros = inject(FiltrosTarefas);
+  // Serviço de filtros compartilhado com o quadro
+  private filtrosService = inject(FiltrosService);
 
   tarefas = signal<Tarefa[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Aplica os filtros utilizando o serviço compartilhado
-  tarefasFiltradas = computed(() => {
-    return this.filtros.filtrar(this.tarefas());
-  });
+  // Atualiza automaticamente os resultados
+  // quando as tarefas ou os filtros mudam
+  readonly tarefasFiltradas = computed(() =>
+    filtrarTarefas(
+      this.tarefas(),
+      this.filtrosService.filtros()
+    )
+  );
 
-  // Carrega as tarefas da API
+  // Busca as tarefas na API
   async ngOnInit() {
     try {
-      this.tarefas.set(await this.api.listarTarefas());
-    } catch {
+      const dados = await this.api.listarTarefas();
+      this.tarefas.set(dados);
+    } catch (erro) {
+      console.error('Erro ao carregar tarefas:', erro);
+
       this.erro.set(
         'Não foi possível carregar as tarefas. O json-server está rodando?'
       );
@@ -40,10 +57,10 @@ export class ListaTarefas implements OnInit {
     }
   }
 
-  // Atualiza a tarefa na lista após salvar na API
+  // Atualiza o estado local após salvar o novo status na API
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
-    this.tarefas.update((tarefas) =>
-      tarefas.map((tarefa) =>
+    this.tarefas.update(tarefas =>
+      tarefas.map(tarefa =>
         tarefa.id === tarefaAtualizada.id
           ? tarefaAtualizada
           : tarefa

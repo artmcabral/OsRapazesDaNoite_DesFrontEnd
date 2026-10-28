@@ -1,23 +1,39 @@
 
 <header class="cabecalho">
 
-  <h1>Os Rapazes da Noite</h1>
+  <div class="cabecalho-conteudo">
 
-  <nav aria-label="Navegação principal">
-
-    <a routerLink="/tarefas">
-      Lista de tarefas
+    <a routerLink="/tarefas" class="marca">
+      <span class="marca-icone" aria-hidden="true">🌙</span>
+      <span>Os Rapazes da Noite</span>
     </a>
 
-    <a routerLink="/quadro">
-      Quadro
-    </a>
+    <nav aria-label="Navegação principal">
 
-    <a routerLink="/projetos">
-      Projetos
-    </a>
+      <a
+        routerLink="/tarefas"
+        routerLinkActive="ativo"
+      >
+        Tarefas
+      </a>
 
-  </nav>
+      <a
+        routerLink="/projetos"
+        routerLinkActive="ativo"
+      >
+        Projetos
+      </a>
+
+      <a
+        routerLink="/quadro"
+        routerLinkActive="ativo"
+      >
+        Quadro
+      </a>
+
+    </nav>
+
+  </div>
 
 </header>
 

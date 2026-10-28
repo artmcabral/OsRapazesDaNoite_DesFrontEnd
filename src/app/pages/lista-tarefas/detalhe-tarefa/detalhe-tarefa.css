@@ -1,44 +1,71 @@
-
 .detalhe {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 20px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .voltar {
-  display: inline-block;
-  margin-bottom: 20px;
-  color: #1d4ed8;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--cor-texto-suave);
 }
 
 .voltar:hover {
-  text-decoration: underline;
+  color: var(--cor-primaria);
 }
 
 .cartao-detalhe {
-  padding: 24px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  background-color: #ffffff;
+  padding: 2rem;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-md);
 }
 
 .cartao-detalhe h1 {
-  margin-top: 0;
-  color: #1f2937;
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 .descricao {
-  color: #4b5563;
-  line-height: 1.6;
+  color: var(--cor-texto-suave);
+  line-height: 1.7;
 }
 
 .informacoes {
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px solid #e5e7eb;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cor-borda);
 }
 
 .informacoes p {
-  margin: 12px 0;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: var(--cor-fundo);
+  border-radius: var(--raio-sm);
+  font-size: 0.9rem;
+}
+
+.informacoes strong {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-fraco);
+  margin-bottom: 0.2rem;
+}
+
+@media (max-width: 600px) {
+  .cartao-detalhe {
+    padding: 1.25rem;
+  }
 }

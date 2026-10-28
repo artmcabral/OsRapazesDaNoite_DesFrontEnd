@@ -2,9 +2,12 @@
 <section>
   @if (carregando()) {
     <p>Carregando projeto...</p>
+
   } @else if (erro()) {
     <p role="alert">{{ erro() }}</p>
+
   } @else if (projeto(); as p) {
+
     <a routerLink="/projetos" class="link-voltar">
       ⬅ Voltar para projetos
     </a>
@@ -30,6 +33,7 @@
 
     <ul class="lista-tarefas">
       @for (tarefa of p.tarefas; track tarefa.id) {
+
         <li class="item-tarefa">
 
           <!-- Cartão com atualização de status -->
@@ -38,21 +42,24 @@
             (statusAlterado)="aoAlterarStatus($event)"
           />
 
-          <!-- Botão de edição existente -->
+          <!-- Navegação para edição da tarefa -->
           <a
             class="btn-editar"
-            [routerLink]="['/tarefas/editar', tarefa.id]"
+            [routerLink]="['/tarefas', tarefa.id, 'editar']"
             title="Editar esta tarefa"
           >
             ✏️ Editar
           </a>
 
         </li>
+
       } @empty {
+
         <li class="tarefa-vazia">
           Este projeto ainda não possui tarefas.
           Clique no botão "Nova Tarefa" acima para começar!
         </li>
+
       }
     </ul>
   }
