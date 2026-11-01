@@ -7,13 +7,14 @@ import {
   computed
 } from '@angular/core';
 
+import { RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
 import { FiltrosService } from '../../services/filtros';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
 import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
+import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
 import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
-import { RouterLink } from '@angular/router';
 
 import type { Tarefa } from '../../../tipos';
 import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
@@ -23,6 +24,7 @@ import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
   imports: [
     TarefaCard,
     BarraFiltros,
+    Carregando,
     MensagemErro,
     EstadoVazio,
     RouterLink
@@ -33,15 +35,12 @@ import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
 export class ListaTarefas implements OnInit {
 
   private api = inject(Api);
-
-  // Serviço de filtros compartilhado com o quadro
   private filtrosService = inject(FiltrosService);
 
   tarefas = signal<Tarefa[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Atualiza resultados quando tarefas ou filtros mudam
   readonly tarefasFiltradas = computed(() =>
     filtrarTarefas(
       this.tarefas(),
@@ -53,7 +52,7 @@ export class ListaTarefas implements OnInit {
     await this.carregar();
   }
 
-  // Busca tarefas na API
+  // Busca as tarefas na API
   async carregar() {
     this.carregando.set(true);
     this.erro.set(null);
@@ -69,7 +68,7 @@ export class ListaTarefas implements OnInit {
     }
   }
 
-  // Limpa os filtros
+  // Limpa os filtros da lista
   limparFiltros() {
     this.filtrosService.alterar({ ...FILTROS_INICIAIS });
   }
@@ -85,7 +84,7 @@ export class ListaTarefas implements OnInit {
     );
   }
 
-  // ISSUE #31 - Remove a tarefa da lista
+  // ISSUE #31 - Remove a tarefa excluída
   aoExcluir(id: string) {
     this.tarefas.update(lista =>
       lista.filter(t => t.id !== id)

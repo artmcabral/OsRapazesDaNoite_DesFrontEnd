@@ -1,0 +1,37 @@
+
+:host {
+  display: block;
+}
+
+.indicador-carregamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 5rem;
+  padding: 1.25rem;
+  color: var(--cor-texto-suave);
+  font-weight: 500;
+}
+
+.spinner {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: none;
+  border: 3px solid var(--cor-borda-forte);
+  border-top-color: var(--cor-primaria);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}

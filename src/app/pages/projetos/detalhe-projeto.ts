@@ -1,16 +1,29 @@
 
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal
+} from '@angular/core';
+
+import {
+  ActivatedRoute,
+  RouterLink
+} from '@angular/router';
+
 import { Api } from '../../services/api';
 import type { ProjetoComTarefas } from '../../services/api';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
+import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
 import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
+
 import type { Tarefa } from '../../../tipos';
 
 @Component({
   selector: 'app-detalhe-projeto',
   imports: [
+    Carregando,
     RouterLink,
     TarefaCard,
     MensagemErro,
@@ -28,15 +41,16 @@ export class DetalheProjeto implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Controla se é possível tentar novamente
+  // ISSUE #33 - Controle de novas tentativas
   podeTentarDeNovo = signal(true);
 
   async ngOnInit() {
     await this.carregar();
   }
 
-  // Busca os dados do projeto
+  // ISSUE #32 - Carrega os dados do projeto
   async carregar() {
+
     const id = this.rota.snapshot.paramMap.get('id');
 
     this.carregando.set(true);
@@ -51,7 +65,10 @@ export class DetalheProjeto implements OnInit {
     }
 
     try {
-      this.projeto.set(await this.api.buscarProjeto(id));
+
+      const dados = await this.api.buscarProjeto(id);
+      this.projeto.set(dados);
+
     } catch (erro) {
 
       const naoExiste =
@@ -73,7 +90,8 @@ export class DetalheProjeto implements OnInit {
 
   // Atualiza o status da tarefa
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
-    this.projeto.update((projeto) => {
+
+    this.projeto.update(projeto => {
 
       if (!projeto) {
         return projeto;
@@ -81,7 +99,7 @@ export class DetalheProjeto implements OnInit {
 
       return {
         ...projeto,
-        tarefas: projeto.tarefas.map((tarefa) =>
+        tarefas: projeto.tarefas.map(tarefa =>
           tarefa.id === tarefaAtualizada.id
             ? tarefaAtualizada
             : tarefa
@@ -90,14 +108,15 @@ export class DetalheProjeto implements OnInit {
     });
   }
 
-  // ISSUE #31 - Exclui a tarefa da lista do projeto
+  // ISSUE #31 - Remove uma tarefa excluída
   aoExcluir(id: string) {
+
     this.projeto.update(projeto =>
       projeto
         ? {
             ...projeto,
             tarefas: projeto.tarefas.filter(
-              t => t.id !== id
+              tarefa => tarefa.id !== id
             )
           }
         : projeto

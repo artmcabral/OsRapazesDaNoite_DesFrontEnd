@@ -1,37 +1,72 @@
+
 <section>
+
   <h2>Projetos</h2>
 
+  <!-- ISSUE #32 - Carregamento -->
   @if (carregando()) {
-    <p>Carregando projetos...</p>
+
+    <app-carregando
+      mensagem="Carregando projetos..."
+    />
+
   } @else if (erro(); as mensagem) {
-    <!-- #33: falha na API, com opção de tentar de novo -->
+
+    <!-- ISSUE #33 - Tratamento de erros -->
     <app-mensagem-erro
       [mensagem]="mensagem"
       (tentarNovamente)="carregar()"
     />
+
   } @else if (projetos().length === 0) {
+
+    <!-- ISSUE #34 - Estado vazio -->
     <app-estado-vazio
       titulo="Nenhum projeto cadastrado ainda."
       dica="Crie o primeiro projeto para organizar as tarefas."
     >
-      <a class="btn btn-primary" routerLink="/projetos/novo">+ Novo projeto</a>
+      <a
+        class="btn btn-primary"
+        routerLink="/projetos/novo"
+      >
+        + Novo projeto
+      </a>
     </app-estado-vazio>
+
   } @else {
+
     <ul class="lista-projetos">
+
       @for (projeto of projetos(); track projeto.id) {
+
         <li>
           <article>
+
             <h3>
               <a [routerLink]="['/projetos', projeto.id]">
                 {{ projeto.nome }}
               </a>
             </h3>
+
             <p>{{ projeto.descricao }}</p>
-            <p><strong>Disciplina:</strong> {{ projeto.disciplina }}</p>
-            <p><strong>Criado em:</strong> {{ projeto.criadoEm }}</p>
+
+            <p>
+              <strong>Disciplina:</strong>
+              {{ projeto.disciplina }}
+            </p>
+
+            <p>
+              <strong>Criado em:</strong>
+              {{ projeto.criadoEm }}
+            </p>
+
           </article>
         </li>
+
       }
+
     </ul>
+
   }
-</section>
+
+</section>

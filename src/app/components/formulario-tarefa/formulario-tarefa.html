@@ -1,82 +1,164 @@
-<form [formGroup]="form" (ngSubmit)="enviar()">
-   <label>
-    Título
-    <input
-      formControlName="titulo"
-      [attr.aria-invalid]="mostrarErro('titulo')"
-      [attr.aria-describedby]="mostrarErro('titulo') ? 'erro-titulo' : null"
-    />
-  </label>
-  @if (mostrarErro('titulo')) {
-    <p class="erro" id="erro-titulo">Informe o título.</p>
-  }
 
-  <label>
-    Descrição
-    <textarea formControlName="descricao"></textarea>
-  </label>
+<!-- ISSUE #32 - Carregamento -->
+@if (carregando()) {
 
+  <app-carregando
+    mensagem="Carregando formulário da tarefa..."
+  />
+
+} @else if (erro(); as mensagem) {
+
+  <!-- ISSUE #33 - Tratamento de erros -->
+  <app-mensagem-erro
+    [mensagem]="mensagem"
+    (tentarNovamente)="carregar()"
+  />
+
+} @else {
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="enviar()"
+  >
+
+    <!-- Título -->
     <label>
-    Projeto
-    <select
-      formControlName="projetoId"
-      [attr.aria-invalid]="mostrarErro('projetoId')"
-      [attr.aria-describedby]="mostrarErro('projetoId') ? 'erro-projeto' : null"
+      Título
+
+      <input
+        formControlName="titulo"
+        [attr.aria-invalid]="mostrarErro('titulo')"
+        [attr.aria-describedby]="mostrarErro('titulo') ? 'erro-titulo' : null"
+      />
+
+    </label>
+
+    @if (mostrarErro('titulo')) {
+      <p class="erro" id="erro-titulo">
+        Informe o título.
+      </p>
+    }
+
+    <!-- Descrição -->
+    <label>
+      Descrição
+
+      <textarea
+        formControlName="descricao"
+      ></textarea>
+
+    </label>
+
+    <!-- Projeto -->
+    <label>
+      Projeto
+
+      <select
+        formControlName="projetoId"
+        [attr.aria-invalid]="mostrarErro('projetoId')"
+        [attr.aria-describedby]="mostrarErro('projetoId') ? 'erro-projeto' : null"
+      >
+
+        <option value="" disabled>
+          Escolha um projeto
+        </option>
+
+        @for (p of projetos(); track p.id) {
+
+          <option [value]="p.id">
+            {{ p.nome }}
+          </option>
+
+        }
+
+      </select>
+    </label>
+
+    @if (mostrarErro('projetoId')) {
+      <p class="erro" id="erro-projeto">
+        Escolha um projeto.
+      </p>
+    }
+
+    <!-- Status -->
+    <label>
+      Status
+
+      <select formControlName="status">
+
+        @for (o of statusOpcoes; track o.valor) {
+
+          <option [value]="o.valor">
+            {{ o.rotulo }}
+          </option>
+
+        }
+
+      </select>
+    </label>
+
+    <!-- Prioridade -->
+    <label>
+      Prioridade
+
+      <select formControlName="prioridade">
+
+        @for (o of prioridadeOpcoes; track o.valor) {
+
+          <option [value]="o.valor">
+            {{ o.rotulo }}
+          </option>
+
+        }
+
+      </select>
+    </label>
+
+    <!-- Responsável -->
+    <label>
+      Responsável
+
+      <input
+        formControlName="responsavel"
+        [attr.aria-invalid]="mostrarErro('responsavel')"
+        [attr.aria-describedby]="mostrarErro('responsavel') ? 'erro-responsavel' : null"
+      />
+
+    </label>
+
+    @if (mostrarErro('responsavel')) {
+      <p class="erro" id="erro-responsavel">
+        Informe o responsável.
+      </p>
+    }
+
+    <!-- Prazo -->
+    <label>
+      Prazo
+
+      <input
+        type="date"
+        formControlName="prazo"
+        [attr.aria-invalid]="mostrarErro('prazo')"
+        [attr.aria-describedby]="mostrarErro('prazo') ? 'erro-prazo' : null"
+      />
+
+    </label>
+
+    @if (mostrarErro('prazo')) {
+      <p class="erro" id="erro-prazo">
+        Informe o prazo.
+      </p>
+    }
+
+    <!-- Salvar -->
+    <button
+      type="submit"
+      [disabled]="enviando()"
     >
-      <option value="" disabled>Escolha um projeto</option>
-      @for (p of projetos(); track p.id) {
-        <option [value]="p.id">{{ p.nome }}</option>
-      }
-    </select>
-  </label>
-  @if (mostrarErro('projetoId')) {
-    <p class="erro" id="erro-projeto">Escolha um projeto.</p>
-  }
+      {{ enviando() ? 'Salvando...' : 'Salvar' }}
+    </button>
 
-  <label>
-    Status
-    <select formControlName="status">
-      @for (o of statusOpcoes; track o.valor) {
-        <option [value]="o.valor">{{ o.rotulo }}</option>
-      }
-    </select>
-  </label>
+  </form>
 
-  <label>
-    Prioridade
-    <select formControlName="prioridade">
-      @for (o of prioridadeOpcoes; track o.valor) {
-        <option [value]="o.valor">{{ o.rotulo }}</option>
-      }
-    </select>
-  </label>
-
-  <label>
-    Responsável
-    <input
-      formControlName="responsavel"
-      [attr.aria-invalid]="mostrarErro('responsavel')"
-      [attr.aria-describedby]="mostrarErro('responsavel') ? 'erro-responsavel' : null"
-    />
-  </label>
-  @if (mostrarErro('responsavel')) {
-    <p class="erro" id="erro-responsavel">Informe o responsável.</p>
-  }
-
-    <label>
-    Prazo
-    <input
-      type="date"
-      formControlName="prazo"
-      [attr.aria-invalid]="mostrarErro('prazo')"
-      [attr.aria-describedby]="mostrarErro('prazo') ? 'erro-prazo' : null"
-    />
-  </label>
-  @if (mostrarErro('prazo')) {
-    <p class="erro" id="erro-prazo">Informe o prazo.</p>
-  }
-
-  <button type="submit" [disabled]="enviando()">
-    {{ enviando() ? 'Salvando...' : 'Salvar' }}
-  </button>
-</form>
+}

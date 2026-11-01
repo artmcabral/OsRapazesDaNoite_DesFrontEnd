@@ -3,15 +3,19 @@
 
   <h2>Quadro de tarefas (Kanban)</h2>
 
-  <!-- Filtros compartilhados com a lista -->
+  <!-- Filtros compartilhados -->
   <app-barra-filtros />
 
+  <!-- ISSUE #32 - Carregamento do quadro -->
   @if (carregando()) {
 
-    <p>Carregando tarefas...</p>
+    <app-carregando
+      mensagem="Carregando tarefas do quadro..."
+    />
 
   } @else if (erro(); as mensagem) {
 
+    <!-- ISSUE #33 - Erro -->
     <app-mensagem-erro
       [mensagem]="mensagem"
       (tentarNovamente)="carregar()"
@@ -19,6 +23,7 @@
 
   } @else if (tarefas().length === 0) {
 
+    <!-- ISSUE #34 - Quadro sem tarefas -->
     <app-estado-vazio
       titulo="Nenhuma tarefa cadastrada ainda."
       dica="Crie a primeira tarefa para ela aparecer no quadro."
@@ -33,6 +38,7 @@
 
   } @else if (tarefasFiltradas().length === 0) {
 
+    <!-- ISSUE #34 - Busca sem resultados -->
     <app-estado-vazio
       titulo="Nenhuma tarefa encontrada."
       dica="Nenhuma tarefa corresponde à busca e aos filtros selecionados."

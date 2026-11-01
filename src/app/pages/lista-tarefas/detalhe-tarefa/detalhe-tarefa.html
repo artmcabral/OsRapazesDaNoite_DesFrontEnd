@@ -1,29 +1,67 @@
 
 <main class="detalhe">
-  <a routerLink="/tarefas" class="voltar">← Voltar para tarefas</a>
 
+  <a routerLink="/tarefas" class="voltar">
+    ← Voltar para tarefas
+  </a>
+
+  <!-- ISSUE #32 - Estado de carregamento -->
   @if (carregando()) {
-    <p role="status">Carregando detalhes da tarefa...</p>
+
+    <app-carregando
+      mensagem="Carregando detalhes da tarefa..."
+    />
+
   } @else if (erro(); as mensagem) {
-    <!-- #33: falha na API, com opção de tentar de novo -->
+
+    <!-- ISSUE #33 - Tratamento de erros -->
     <app-mensagem-erro
       [mensagem]="mensagem"
       [podeTentarDeNovo]="podeTentarDeNovo()"
       (tentarNovamente)="carregar()"
     />
+
   } @else if (tarefa(); as t) {
+
     <article class="cartao-detalhe">
+
       <h1>{{ t.titulo }}</h1>
 
-      <p class="descricao">{{ t.descricao }}</p>
+      <p class="descricao">
+        {{ t.descricao }}
+      </p>
 
       <section class="informacoes">
-        <p><strong>Status:</strong> {{ t.status }}</p>
-        <p><strong>Prioridade:</strong> {{ t.prioridade }}</p>
-        <p><strong>Responsável:</strong> {{ t.responsavel }}</p>
-        <p><strong>Prazo:</strong> {{ t.prazo }}</p>
-        <p><strong>ID do projeto:</strong> {{ t.projetoId }}</p>
+
+        <p>
+          <strong>Status:</strong>
+          {{ t.status }}
+        </p>
+
+        <p>
+          <strong>Prioridade:</strong>
+          {{ t.prioridade }}
+        </p>
+
+        <p>
+          <strong>Responsável:</strong>
+          {{ t.responsavel }}
+        </p>
+
+        <p>
+          <strong>Prazo:</strong>
+          {{ t.prazo }}
+        </p>
+
+        <p>
+          <strong>ID do projeto:</strong>
+          {{ t.projetoId }}
+        </p>
+
       </section>
+
     </article>
+
   }
-</main>
+
+</main>

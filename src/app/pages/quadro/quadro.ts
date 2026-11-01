@@ -8,14 +8,16 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+
 import { Api } from '../../services/api';
 import { FiltrosService } from '../../services/filtros';
 import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
 import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
+import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
 import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
-import { RouterLink } from '@angular/router';
 
 import type { Status, Tarefa } from '../../../tipos';
 
@@ -26,6 +28,7 @@ import type { Status, Tarefa } from '../../../tipos';
     CommonModule,
     BarraFiltros,
     TarefaCard,
+    Carregando,
     MensagemErro,
     EstadoVazio,
     RouterLink
@@ -36,15 +39,13 @@ import type { Status, Tarefa } from '../../../tipos';
 export class Quadro implements OnInit {
 
   private api = inject(Api);
-
-  // Estado compartilhado com a lista
   readonly filtrosService = inject(FiltrosService);
 
   tarefas = signal<Tarefa[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Colunas do quadro
+  // Colunas do quadro Kanban
   readonly colunas: {
     status: Status;
     titulo: string;
@@ -55,7 +56,7 @@ export class Quadro implements OnInit {
     { status: 'concluida', titulo: 'Concluída' },
   ];
 
-  // Aplica os filtros
+  // Aplica os filtros compartilhados
   readonly tarefasFiltradas = computed(() =>
     filtrarTarefas(
       this.tarefas(),
@@ -63,7 +64,7 @@ export class Quadro implements OnInit {
     )
   );
 
-  // Agrupa tarefas por status
+  // Separa as tarefas por coluna
   tarefasDaColuna(status: Status): Tarefa[] {
     return this.tarefasFiltradas().filter(
       tarefa => tarefa.status === status
@@ -74,7 +75,7 @@ export class Quadro implements OnInit {
     await this.carregar();
   }
 
-  // Busca tarefas na API
+  // ISSUE #32 - Busca com controle de carregamento
   async carregar() {
     this.carregando.set(true);
     this.erro.set(null);
@@ -84,7 +85,9 @@ export class Quadro implements OnInit {
       this.tarefas.set(dados);
     } catch (erro) {
       console.error('Erro ao carregar tarefas:', erro);
-      this.erro.set('Não foi possível carregar as tarefas do quadro.');
+      this.erro.set(
+        'Não foi possível carregar as tarefas do quadro.'
+      );
     } finally {
       this.carregando.set(false);
     }
@@ -95,7 +98,7 @@ export class Quadro implements OnInit {
     this.filtrosService.alterar({ ...FILTROS_INICIAIS });
   }
 
-  // Atualiza status da tarefa
+  // Atualiza o status de uma tarefa
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
     this.tarefas.update(tarefas =>
       tarefas.map(tarefa =>
@@ -106,7 +109,7 @@ export class Quadro implements OnInit {
     );
   }
 
-  // ISSUE #31 - Remove a tarefa do quadro
+  // ISSUE #31 - Remove a tarefa excluída do quadro
   aoExcluir(id: string) {
     this.tarefas.update(lista =>
       lista.filter(t => t.id !== id)

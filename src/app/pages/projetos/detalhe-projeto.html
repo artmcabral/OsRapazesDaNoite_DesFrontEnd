@@ -1,12 +1,16 @@
 
 <section>
 
+  <!-- ISSUE #32 - Carregamento -->
   @if (carregando()) {
 
-    <p>Carregando projeto...</p>
+    <app-carregando
+      mensagem="Carregando projeto..."
+    />
 
   } @else if (erro(); as mensagem) {
 
+    <!-- ISSUE #33 - Tratamento de erros -->
     <app-mensagem-erro
       [mensagem]="mensagem"
       [podeTentarDeNovo]="podeTentarDeNovo()"
@@ -20,11 +24,14 @@
     </a>
 
     <h2>{{ p.nome }}</h2>
+
     <p>{{ p.descricao }}</p>
+
     <p>
       <strong>Disciplina:</strong>
       {{ p.disciplina }}
     </p>
+
     <p>
       <strong>Criado em:</strong>
       {{ p.criadoEm }}
@@ -46,6 +53,7 @@
 
     </div>
 
+    <!-- ISSUE #34 - Estado vazio -->
     @if (p.tarefas.length === 0) {
 
       <app-estado-vazio
@@ -61,16 +69,21 @@
 
           <li class="item-tarefa">
 
+            <!-- Cartão da tarefa -->
             <app-tarefa-card
               [tarefa]="tarefa"
               (statusAlterado)="aoAlterarStatus($event)"
               (excluida)="aoExcluir($event)"
             />
 
-            <!-- Link para editar -->
+            <!-- Botão para editar -->
             <a
               class="btn-editar"
-              [routerLink]="['/tarefas', tarefa.id, 'editar']"
+              [routerLink]="[
+                '/tarefas',
+                tarefa.id,
+                'editar'
+              ]"
               title="Editar esta tarefa"
             >
               ✏️ Editar
