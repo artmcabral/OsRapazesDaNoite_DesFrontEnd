@@ -4,11 +4,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
 import type { ProjetoComTarefas } from '../../services/api';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
+import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
+import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
 import type { Tarefa } from '../../../tipos';
 
 @Component({
   selector: 'app-detalhe-projeto',
-  imports: [RouterLink, TarefaCard],
+  imports: [RouterLink, TarefaCard, MensagemErro, EstadoVazio],
   templateUrl: './detalhe-projeto.html',
   styleUrl: './detalhe-projeto.css',
 })
@@ -20,20 +22,41 @@ export class DetalheProjeto implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Carrega os dados do projeto
+  // false quando o projeto não existe: tentar de novo não adianta (#33)
+  podeTentarDeNovo = signal(true);
+
   async ngOnInit() {
+    await this.carregar();
+  }
+
+  // Carrega os dados do projeto
+  // (também é chamada pelo botão "Tentar de novo" - #33)
+  async carregar() {
     const id = this.rota.snapshot.paramMap.get('id');
+
+    this.carregando.set(true);
+    this.erro.set(null);
+    this.podeTentarDeNovo.set(true);
 
     if (!id) {
       this.erro.set('Projeto não encontrado.');
+      this.podeTentarDeNovo.set(false);
       this.carregando.set(false);
       return;
     }
 
     try {
       this.projeto.set(await this.api.buscarProjeto(id));
-    } catch {
-      this.erro.set('Não foi possível carregar o projeto.');
+    } catch (erro) {
+      // A API responde 404 quando o id não existe
+      const naoExiste = erro instanceof Error && erro.message === 'HTTP 404';
+
+      this.erro.set(
+        naoExiste
+          ? 'Projeto não encontrado.'
+          : 'Não foi possível carregar o projeto.'
+      );
+      this.podeTentarDeNovo.set(!naoExiste);
     } finally {
       this.carregando.set(false);
     }

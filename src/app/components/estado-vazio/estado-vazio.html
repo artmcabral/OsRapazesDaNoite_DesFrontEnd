@@ -1,0 +1,12 @@
+<div class="estado-vazio" role="status">
+
+  <p class="titulo">{{ titulo() }}</p>
+
+  @if (dica()) {
+    <p class="dica">{{ dica() }}</p>
+  }
+
+  <!-- Espaço para uma ação opcional (ex.: botão "Limpar busca e filtros") -->
+  <ng-content />
+
+</div>

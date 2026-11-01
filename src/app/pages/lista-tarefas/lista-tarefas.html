@@ -10,9 +10,35 @@
 
     <p>Carregando tarefas...</p>
 
-  } @else if (erro()) {
+  } @else if (erro(); as mensagem) {
 
-    <p role="alert">{{ erro() }}</p>
+    <!-- #33: falha na API, com opção de tentar de novo -->
+    <app-mensagem-erro
+      [mensagem]="mensagem"
+      (tentarNovamente)="carregar()"
+    />
+
+  } @else if (tarefas().length === 0) {
+
+    <!-- #34: não existe nenhuma tarefa cadastrada -->
+    <app-estado-vazio
+      titulo="Nenhuma tarefa cadastrada ainda."
+      dica="Crie a primeira tarefa para começar."
+    >
+      <a class="btn btn-primary" routerLink="/tarefas/nova">+ Nova tarefa</a>
+    </app-estado-vazio>
+
+  } @else if (tarefasFiltradas().length === 0) {
+
+    <!-- #34: existem tarefas, mas a busca e os filtros não encontraram nada -->
+    <app-estado-vazio
+      titulo="Nenhuma tarefa encontrada."
+      dica="Nenhuma tarefa corresponde à busca e aos filtros selecionados."
+    >
+      <button type="button" (click)="limparFiltros()">
+        Limpar busca e filtros
+      </button>
+    </app-estado-vazio>
 
   } @else {
 
@@ -30,10 +56,6 @@
             (statusAlterado)="aoAlterarStatus($event)"
           />
         </li>
-
-      } @empty {
-
-        <li>Nenhuma tarefa encontrada.</li>
 
       }
 

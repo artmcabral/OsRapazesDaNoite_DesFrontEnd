@@ -1,0 +1,18 @@
+<div class="mensagem-erro" role="alert">
+
+  <p class="titulo">{{ mensagem() }}</p>
+
+  @if (podeTentarDeNovo()) {
+
+    <p class="dica">
+      O servidor não respondeu. Confira se o json-server está rodando
+      e tente de novo.
+    </p>
+
+    <button type="button" (click)="tentarNovamente.emit()">
+      Tentar de novo
+    </button>
+
+  }
+
+</div>

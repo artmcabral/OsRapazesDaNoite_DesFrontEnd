@@ -1,0 +1,17 @@
+.mensagem-erro {
+  padding: 1.5rem 1.75rem;
+  background: var(--cor-erro-fundo);
+  border: 1px solid var(--cor-erro);
+  border-radius: var(--raio-md);
+}
+
+.titulo {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  color: var(--cor-erro);
+}
+
+.dica {
+  margin: 0 0 1rem;
+  color: var(--cor-texto-suave);
+}

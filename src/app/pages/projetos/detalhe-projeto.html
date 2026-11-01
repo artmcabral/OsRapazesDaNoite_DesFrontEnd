@@ -3,8 +3,14 @@
   @if (carregando()) {
     <p>Carregando projeto...</p>
 
-  } @else if (erro()) {
-    <p role="alert">{{ erro() }}</p>
+  } @else if (erro(); as mensagem) {
+
+    <!-- #33: falha na API, com opção de tentar de novo -->
+    <app-mensagem-erro
+      [mensagem]="mensagem"
+      [podeTentarDeNovo]="podeTentarDeNovo()"
+      (tentarNovamente)="carregar()"
+    />
 
   } @else if (projeto(); as p) {
 
@@ -31,36 +37,41 @@
       </a>
     </div>
 
-    <ul class="lista-tarefas">
-      @for (tarefa of p.tarefas; track tarefa.id) {
+    @if (p.tarefas.length === 0) {
 
-        <li class="item-tarefa">
+      <!-- #34: o projeto ainda não tem tarefas -->
+      <app-estado-vazio
+        titulo="Este projeto ainda não tem tarefas."
+        dica="Clique em &quot;+ Nova Tarefa&quot; acima para criar a primeira."
+      />
 
-          <!-- Cartão com atualização de status -->
-          <app-tarefa-card
-            [tarefa]="tarefa"
-            (statusAlterado)="aoAlterarStatus($event)"
-          />
+    } @else {
 
-          <!-- Navegação para edição da tarefa -->
-          <a
-            class="btn-editar"
-            [routerLink]="['/tarefas', tarefa.id, 'editar']"
-            title="Editar esta tarefa"
-          >
-            ✏️ Editar
-          </a>
+      <ul class="lista-tarefas">
+        @for (tarefa of p.tarefas; track tarefa.id) {
 
-        </li>
+          <li class="item-tarefa">
 
-      } @empty {
+            <!-- Cartão com atualização de status -->
+            <app-tarefa-card
+              [tarefa]="tarefa"
+              (statusAlterado)="aoAlterarStatus($event)"
+            />
 
-        <li class="tarefa-vazia">
-          Este projeto ainda não possui tarefas.
-          Clique no botão "Nova Tarefa" acima para começar!
-        </li>
+            <!-- Navegação para edição da tarefa -->
+            <a
+              class="btn-editar"
+              [routerLink]="['/tarefas', tarefa.id, 'editar']"
+              title="Editar esta tarefa"
+            >
+              ✏️ Editar
+            </a>
 
-      }
-    </ul>
+          </li>
+
+        }
+      </ul>
+
+    }
   }
 </section>

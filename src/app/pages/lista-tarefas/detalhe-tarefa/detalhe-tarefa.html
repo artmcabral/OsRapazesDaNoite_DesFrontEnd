@@ -4,8 +4,13 @@
 
   @if (carregando()) {
     <p role="status">Carregando detalhes da tarefa...</p>
-  } @else if (erro()) {
-    <p role="alert">{{ erro() }}</p>
+  } @else if (erro(); as mensagem) {
+    <!-- #33: falha na API, com opção de tentar de novo -->
+    <app-mensagem-erro
+      [mensagem]="mensagem"
+      [podeTentarDeNovo]="podeTentarDeNovo()"
+      (tentarNovamente)="carregar()"
+    />
   } @else if (tarefa(); as t) {
     <article class="cartao-detalhe">
       <h1>{{ t.titulo }}</h1>
@@ -21,4 +26,4 @@
       </section>
     </article>
   }
-</main>
+</main>

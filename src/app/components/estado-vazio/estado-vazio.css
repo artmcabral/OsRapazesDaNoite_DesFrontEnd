@@ -1,0 +1,22 @@
+.estado-vazio {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda-forte);
+  border-radius: var(--raio-md);
+}
+
+.titulo {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.dica {
+  margin: 0 0 1rem;
+  color: var(--cor-texto-suave);
+}
+
+.dica:last-child {
+  margin-bottom: 0;
+}

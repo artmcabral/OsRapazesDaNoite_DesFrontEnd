@@ -3,8 +3,19 @@
 
   @if (carregando()) {
     <p>Carregando projetos...</p>
-  } @else if (erro()) {
-    <p role="alert">{{ erro() }}</p>
+  } @else if (erro(); as mensagem) {
+    <!-- #33: falha na API, com opção de tentar de novo -->
+    <app-mensagem-erro
+      [mensagem]="mensagem"
+      (tentarNovamente)="carregar()"
+    />
+  } @else if (projetos().length === 0) {
+    <app-estado-vazio
+      titulo="Nenhum projeto cadastrado ainda."
+      dica="Crie o primeiro projeto para organizar as tarefas."
+    >
+      <a class="btn btn-primary" routerLink="/projetos/novo">+ Novo projeto</a>
+    </app-estado-vazio>
   } @else {
     <ul class="lista-projetos">
       @for (projeto of projetos(); track projeto.id) {
@@ -20,9 +31,7 @@
             <p><strong>Criado em:</strong> {{ projeto.criadoEm }}</p>
           </article>
         </li>
-      } @empty {
-        <li>Nenhum projeto cadastrado.</li>
       }
     </ul>
   }
-</section>
+</section>
