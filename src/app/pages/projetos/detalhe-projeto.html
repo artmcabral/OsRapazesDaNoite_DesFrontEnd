@@ -1,11 +1,12 @@
 
 <section>
+
   @if (carregando()) {
+
     <p>Carregando projeto...</p>
 
   } @else if (erro(); as mensagem) {
 
-    <!-- #33: falha na API, com opção de tentar de novo -->
     <app-mensagem-erro
       [mensagem]="mensagem"
       [podeTentarDeNovo]="podeTentarDeNovo()"
@@ -20,11 +21,18 @@
 
     <h2>{{ p.nome }}</h2>
     <p>{{ p.descricao }}</p>
-    <p><strong>Disciplina:</strong> {{ p.disciplina }}</p>
-    <p><strong>Criado em:</strong> {{ p.criadoEm }}</p>
+    <p>
+      <strong>Disciplina:</strong>
+      {{ p.disciplina }}
+    </p>
+    <p>
+      <strong>Criado em:</strong>
+      {{ p.criadoEm }}
+    </p>
 
     <!-- Cabeçalho das tarefas -->
     <div class="cabecalho-tarefas">
+
       <h3>Tarefas do projeto</h3>
 
       <a
@@ -35,11 +43,11 @@
       >
         + Nova Tarefa
       </a>
+
     </div>
 
     @if (p.tarefas.length === 0) {
 
-      <!-- #34: o projeto ainda não tem tarefas -->
       <app-estado-vazio
         titulo="Este projeto ainda não tem tarefas."
         dica="Clique em &quot;+ Nova Tarefa&quot; acima para criar a primeira."
@@ -48,17 +56,18 @@
     } @else {
 
       <ul class="lista-tarefas">
+
         @for (tarefa of p.tarefas; track tarefa.id) {
 
           <li class="item-tarefa">
 
-            <!-- Cartão com atualização de status -->
             <app-tarefa-card
               [tarefa]="tarefa"
               (statusAlterado)="aoAlterarStatus($event)"
+              (excluida)="aoExcluir($event)"
             />
 
-            <!-- Navegação para edição da tarefa -->
+            <!-- Link para editar -->
             <a
               class="btn-editar"
               [routerLink]="['/tarefas', tarefa.id, 'editar']"
@@ -70,8 +79,11 @@
           </li>
 
         }
+
       </ul>
 
     }
+
   }
+
 </section>

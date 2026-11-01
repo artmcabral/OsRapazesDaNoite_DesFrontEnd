@@ -20,7 +20,13 @@ import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
 
 @Component({
   selector: 'app-lista-tarefas',
-  imports: [TarefaCard, BarraFiltros, MensagemErro, EstadoVazio, RouterLink],
+  imports: [
+    TarefaCard,
+    BarraFiltros,
+    MensagemErro,
+    EstadoVazio,
+    RouterLink
+  ],
   templateUrl: './lista-tarefas.html',
   styleUrl: './lista-tarefas.css',
 })
@@ -35,8 +41,7 @@ export class ListaTarefas implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Atualiza automaticamente os resultados
-  // quando as tarefas ou os filtros mudam
+  // Atualiza resultados quando tarefas ou filtros mudam
   readonly tarefasFiltradas = computed(() =>
     filtrarTarefas(
       this.tarefas(),
@@ -48,8 +53,7 @@ export class ListaTarefas implements OnInit {
     await this.carregar();
   }
 
-  // Busca as tarefas na API
-  // (também é chamada pelo botão "Tentar de novo" - #33)
+  // Busca tarefas na API
   async carregar() {
     this.carregando.set(true);
     this.erro.set(null);
@@ -65,12 +69,12 @@ export class ListaTarefas implements OnInit {
     }
   }
 
-  // Volta a busca e os filtros para o início (#34)
+  // Limpa os filtros
   limparFiltros() {
     this.filtrosService.alterar({ ...FILTROS_INICIAIS });
   }
 
-  // Atualiza o estado local após salvar o novo status na API
+  // Atualiza o status de uma tarefa
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
     this.tarefas.update(tarefas =>
       tarefas.map(tarefa =>
@@ -78,6 +82,13 @@ export class ListaTarefas implements OnInit {
           ? tarefaAtualizada
           : tarefa
       )
+    );
+  }
+
+  // ISSUE #31 - Remove a tarefa da lista
+  aoExcluir(id: string) {
+    this.tarefas.update(lista =>
+      lista.filter(t => t.id !== id)
     );
   }
 }

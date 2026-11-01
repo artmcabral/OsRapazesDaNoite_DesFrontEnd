@@ -3,7 +3,7 @@
 
   <h2>Tarefas</h2>
 
-  <!-- Barra de busca e filtros compartilhada com o quadro -->
+  <!-- Barra de busca e filtros -->
   <app-barra-filtros />
 
   @if (carregando()) {
@@ -12,7 +12,6 @@
 
   } @else if (erro(); as mensagem) {
 
-    <!-- #33: falha na API, com opção de tentar de novo -->
     <app-mensagem-erro
       [mensagem]="mensagem"
       (tentarNovamente)="carregar()"
@@ -20,22 +19,28 @@
 
   } @else if (tarefas().length === 0) {
 
-    <!-- #34: não existe nenhuma tarefa cadastrada -->
     <app-estado-vazio
       titulo="Nenhuma tarefa cadastrada ainda."
       dica="Crie a primeira tarefa para começar."
     >
-      <a class="btn btn-primary" routerLink="/tarefas/nova">+ Nova tarefa</a>
+      <a
+        class="btn btn-primary"
+        routerLink="/tarefas/nova"
+      >
+        + Nova tarefa
+      </a>
     </app-estado-vazio>
 
   } @else if (tarefasFiltradas().length === 0) {
 
-    <!-- #34: existem tarefas, mas a busca e os filtros não encontraram nada -->
     <app-estado-vazio
       titulo="Nenhuma tarefa encontrada."
       dica="Nenhuma tarefa corresponde à busca e aos filtros selecionados."
     >
-      <button type="button" (click)="limparFiltros()">
+      <button
+        type="button"
+        (click)="limparFiltros()"
+      >
         Limpar busca e filtros
       </button>
     </app-estado-vazio>
@@ -54,6 +59,7 @@
           <app-tarefa-card
             [tarefa]="t"
             (statusAlterado)="aoAlterarStatus($event)"
+            (excluida)="aoExcluir($event)"
           />
         </li>
 

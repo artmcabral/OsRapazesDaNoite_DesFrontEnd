@@ -22,7 +22,14 @@ import type { Status, Tarefa } from '../../../tipos';
 @Component({
   selector: 'app-quadro',
   standalone: true,
-  imports: [CommonModule, BarraFiltros, TarefaCard, MensagemErro, EstadoVazio, RouterLink],
+  imports: [
+    CommonModule,
+    BarraFiltros,
+    TarefaCard,
+    MensagemErro,
+    EstadoVazio,
+    RouterLink
+  ],
   templateUrl: './quadro.html',
   styleUrl: './quadro.css'
 })
@@ -37,7 +44,7 @@ export class Quadro implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Uma coluna para cada status
+  // Colunas do quadro
   readonly colunas: {
     status: Status;
     titulo: string;
@@ -48,7 +55,7 @@ export class Quadro implements OnInit {
     { status: 'concluida', titulo: 'Concluída' },
   ];
 
-  // Aplica a mesma função de filtros da lista
+  // Aplica os filtros
   readonly tarefasFiltradas = computed(() =>
     filtrarTarefas(
       this.tarefas(),
@@ -56,7 +63,7 @@ export class Quadro implements OnInit {
     )
   );
 
-  // Agrupa as tarefas por status
+  // Agrupa tarefas por status
   tarefasDaColuna(status: Status): Tarefa[] {
     return this.tarefasFiltradas().filter(
       tarefa => tarefa.status === status
@@ -67,8 +74,7 @@ export class Quadro implements OnInit {
     await this.carregar();
   }
 
-  // Busca as tarefas na API
-  // (também é chamada pelo botão "Tentar de novo" - #33)
+  // Busca tarefas na API
   async carregar() {
     this.carregando.set(true);
     this.erro.set(null);
@@ -84,12 +90,12 @@ export class Quadro implements OnInit {
     }
   }
 
-  // Volta a busca e os filtros para o início (#34)
+  // Limpa os filtros
   limparFiltros() {
     this.filtrosService.alterar({ ...FILTROS_INICIAIS });
   }
 
-  // Atualiza a tarefa após mudança de status na API
+  // Atualiza status da tarefa
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
     this.tarefas.update(tarefas =>
       tarefas.map(tarefa =>
@@ -97,6 +103,13 @@ export class Quadro implements OnInit {
           ? tarefaAtualizada
           : tarefa
       )
+    );
+  }
+
+  // ISSUE #31 - Remove a tarefa do quadro
+  aoExcluir(id: string) {
+    this.tarefas.update(lista =>
+      lista.filter(t => t.id !== id)
     );
   }
 }

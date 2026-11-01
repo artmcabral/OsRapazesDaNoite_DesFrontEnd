@@ -165,3 +165,21 @@
   color: #b42318;
   font-size: 0.85rem;
 }
+
+/* ISSUE #31 - Estilo do botão de exclusão */
+.btn-excluir {
+  margin-top: 0.85rem;
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+  border: 1px solid var(--cor-erro);
+}
+
+.btn-excluir:hover:not(:disabled) {
+  background: var(--cor-erro);
+  color: #fff;
+}
+
+.btn-excluir:focus-visible {
+  outline: 3px solid var(--cor-erro);
+  outline-offset: 2px;
+}

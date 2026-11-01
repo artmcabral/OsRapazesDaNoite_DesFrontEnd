@@ -10,11 +10,17 @@ import type { Tarefa } from '../../../tipos';
 
 @Component({
   selector: 'app-detalhe-projeto',
-  imports: [RouterLink, TarefaCard, MensagemErro, EstadoVazio],
+  imports: [
+    RouterLink,
+    TarefaCard,
+    MensagemErro,
+    EstadoVazio
+  ],
   templateUrl: './detalhe-projeto.html',
   styleUrl: './detalhe-projeto.css',
 })
 export class DetalheProjeto implements OnInit {
+
   private api = inject(Api);
   private rota = inject(ActivatedRoute);
 
@@ -22,15 +28,14 @@ export class DetalheProjeto implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // false quando o projeto não existe: tentar de novo não adianta (#33)
+  // Controla se é possível tentar novamente
   podeTentarDeNovo = signal(true);
 
   async ngOnInit() {
     await this.carregar();
   }
 
-  // Carrega os dados do projeto
-  // (também é chamada pelo botão "Tentar de novo" - #33)
+  // Busca os dados do projeto
   async carregar() {
     const id = this.rota.snapshot.paramMap.get('id');
 
@@ -48,21 +53,25 @@ export class DetalheProjeto implements OnInit {
     try {
       this.projeto.set(await this.api.buscarProjeto(id));
     } catch (erro) {
-      // A API responde 404 quando o id não existe
-      const naoExiste = erro instanceof Error && erro.message === 'HTTP 404';
+
+      const naoExiste =
+        erro instanceof Error &&
+        erro.message === 'HTTP 404';
 
       this.erro.set(
         naoExiste
           ? 'Projeto não encontrado.'
           : 'Não foi possível carregar o projeto.'
       );
+
       this.podeTentarDeNovo.set(!naoExiste);
+
     } finally {
       this.carregando.set(false);
     }
   }
 
-  // Atualiza o status da tarefa na página do projeto
+  // Atualiza o status da tarefa
   aoAlterarStatus(tarefaAtualizada: Tarefa) {
     this.projeto.update((projeto) => {
 
@@ -79,5 +88,19 @@ export class DetalheProjeto implements OnInit {
         )
       };
     });
+  }
+
+  // ISSUE #31 - Exclui a tarefa da lista do projeto
+  aoExcluir(id: string) {
+    this.projeto.update(projeto =>
+      projeto
+        ? {
+            ...projeto,
+            tarefas: projeto.tarefas.filter(
+              t => t.id !== id
+            )
+          }
+        : projeto
+    );
   }
 }

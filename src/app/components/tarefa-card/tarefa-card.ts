@@ -32,8 +32,15 @@ export class TarefaCard {
   // Avisa a página quando o status é atualizado
   statusAlterado = output<Tarefa>();
 
+  // ISSUE #31 - Avisa a página quando a tarefa é excluída
+  excluida = output<string>();
+
   // Controla o salvamento
   salvando = signal(false);
+
+  // ISSUE #31 - Controla a exclusão
+  excluindo = signal(false);
+
   erro = signal<string | null>(null);
 
   // Status disponíveis
@@ -69,6 +76,7 @@ export class TarefaCard {
     // Evita salvar duas vezes
     if (
       this.salvando() ||
+      this.excluindo() ||
       novoStatus === this.tarefa().status
     ) {
       return;
@@ -100,6 +108,44 @@ export class TarefaCard {
 
     } finally {
       this.salvando.set(false);
+    }
+  }
+
+  // ISSUE #31 - Excluir tarefa com confirmação
+  async excluir() {
+
+    // Impede operações simultâneas
+    if (this.salvando() || this.excluindo()) {
+      return;
+    }
+
+    // Solicita confirmação ao usuário
+    if (!confirm(`Excluir a tarefa "${this.tarefa().titulo}"?`)) {
+      return;
+    }
+
+    this.excluindo.set(true);
+    this.erro.set(null);
+
+    try {
+
+      const id = this.tarefa().id;
+
+      // Exclui a tarefa na API
+      await this.api.excluirTarefa(id);
+
+      // Avisa a página para remover o cartão
+      this.excluida.emit(id);
+
+    } catch {
+
+      // Exibe o erro dentro do cartão
+      this.erro.set(
+        'Não foi possível excluir a tarefa.'
+      );
+
+    } finally {
+      this.excluindo.set(false);
     }
   }
 

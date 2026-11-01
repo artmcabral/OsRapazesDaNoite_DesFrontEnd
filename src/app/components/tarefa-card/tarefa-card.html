@@ -47,7 +47,7 @@
 
     <select
       [value]="tarefa().status"
-      [disabled]="salvando()"
+      [disabled]="salvando() || excluindo()"
       (change)="alterarStatus($any($event.target).value, $any($event.target))"
     >
 
@@ -64,9 +64,25 @@
 
   </label>
 
+  <!-- ISSUE #31 - Botão de excluir -->
+  <button
+    type="button"
+    class="btn-excluir"
+    [disabled]="salvando() || excluindo()"
+    (click)="excluir()"
+  >
+    {{ excluindo() ? 'Excluindo...' : 'Excluir' }}
+  </button>
+
   @if (salvando()) {
     <p role="status" class="aviso">
       Salvando status...
+    </p>
+  }
+
+  @if (excluindo()) {
+    <p role="status" class="aviso">
+      Excluindo tarefa...
     </p>
   }
 
