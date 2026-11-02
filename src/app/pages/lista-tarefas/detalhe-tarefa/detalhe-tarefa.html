@@ -1,9 +1,11 @@
 
 <main class="detalhe">
 
-  <a routerLink="/tarefas" class="voltar">
-    ← Voltar para tarefas
-  </a>
+  @if (!naoEncontrada()) {
+    <a routerLink="/tarefas" class="voltar">
+      ← Voltar para tarefas
+    </a>
+  }
 
   <!-- ISSUE #32 - Estado de carregamento -->
   @if (carregando()) {
@@ -12,12 +14,21 @@
       mensagem="Carregando detalhes da tarefa..."
     />
 
+  } @else if (naoEncontrada()) {
+
+    <!-- Issue #37 - Tarefa inexistente -->
+    <app-nao-encontrada
+      titulo="Tarefa não encontrada"
+      mensagem="Essa tarefa não existe ou já foi excluída."
+      destino="/tarefas"
+      rotuloLink="Voltar para tarefas"
+    />
+
   } @else if (erro(); as mensagem) {
 
     <!-- ISSUE #33 - Tratamento de erros -->
     <app-mensagem-erro
       [mensagem]="mensagem"
-      [podeTentarDeNovo]="podeTentarDeNovo()"
       (tentarNovamente)="carregar()"
     />
 
