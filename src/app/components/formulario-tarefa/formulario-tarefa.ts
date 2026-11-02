@@ -1,4 +1,3 @@
-
 import {
   Component,
   ElementRef,
@@ -55,7 +54,7 @@ export class FormularioTarefa implements OnInit {
   projetos = signal<Projeto[]>([]);
   enviando = signal(false);
 
-  // ISSUE #32 - Estados de carregamento e erro
+  // ISSUE #32 / ISSUE #38 - Estados de carregamento e erro[cite: 15]
   carregando = signal(true);
   erro = signal<string | null>(null);
 
@@ -173,7 +172,7 @@ export class FormularioTarefa implements OnInit {
     }
   }
 
-  // Salva a tarefa
+  // Salva a tarefa (Ajustado para Issue #38)[cite: 15]
   async enviar() {
 
     if (this.form.invalid) {
@@ -183,10 +182,9 @@ export class FormularioTarefa implements OnInit {
     }
 
     this.enviando.set(true);
+    this.erro.set(null);
 
     const dadosFormulario = this.form.getRawValue();
-
-    this.salvar.emit(dadosFormulario);
 
     try {
 
@@ -209,6 +207,8 @@ export class FormularioTarefa implements OnInit {
 
       }
 
+      this.salvar.emit(dadosFormulario);
+
       await this.router.navigate([
         '/projetos',
         dadosFormulario.projetoId
@@ -219,6 +219,11 @@ export class FormularioTarefa implements OnInit {
       console.error(
         'Erro ao salvar a tarefa:',
         erro
+      );
+
+      // ISSUE #38: Notifica a falha sem resetar o formulário[cite: 15]
+      this.erro.set(
+        'Não foi possível salvar a tarefa. Verifique a ligação e tente novamente.'
       );
 
     } finally {

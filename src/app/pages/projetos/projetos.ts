@@ -1,10 +1,9 @@
-
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
+import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
 import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
-import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
 import type { Projeto } from '../../../tipos';
 
 @Component({

@@ -1,4 +1,3 @@
-
 <!-- ISSUE #32 - Carregamento -->
 @if (carregando()) {
 
@@ -6,15 +5,23 @@
     mensagem="Carregando formulário da tarefa..."
   />
 
-} @else if (erro(); as mensagem) {
+} @else if (erro() && !form.touched) {
 
-  <!-- ISSUE #33 - Tratamento de erros -->
+  <!-- ISSUE #33 - Erro no carregamento inicial da página -->
   <app-mensagem-erro
-    [mensagem]="mensagem"
+    [mensagem]="erro()!"
     (tentarNovamente)="carregar()"
   />
 
 } @else {
+
+  <!-- ISSUE #38 - Exibe mensagem de erro de envio SEM esconder o formulário -->
+  @if (erro()) {
+    <app-mensagem-erro
+      [mensagem]="erro()!"
+      (tentarNovamente)="enviar()"
+    />
+  }
 
   <form
     [formGroup]="form"

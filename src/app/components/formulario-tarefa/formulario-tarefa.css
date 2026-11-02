@@ -9,6 +9,13 @@ form {
   box-shadow: var(--sombra-md);
 }
 
+/* ISSUE #38: Espaçamento adequado para o componente de erro de envio */
+app-mensagem-erro {
+  display: block;
+  margin-bottom: 1rem;
+  max-width: 560px;
+}
+
 label {
   display: grid;
   gap: 0.35rem;
@@ -46,6 +53,7 @@ button[type='submit'] {
   box-shadow: 0 0 0 3px rgb(192 57 43 / 0.12);
 }
 
+/* ISSUE #39: Ajuste do formulário em dispositivos móveis */
 @media (max-width: 600px) {
   form {
     padding: 1.25rem;

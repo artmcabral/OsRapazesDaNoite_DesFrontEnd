@@ -199,3 +199,13 @@ button:disabled {
 [role='status'] {
   color: var(--cor-texto-suave);
 }
+
+/* ISSUE #39: Destaque de foco visível para acessibilidade via teclado */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 3px solid #38bdf8 !important;
+  outline-offset: 2px !important;
+}
