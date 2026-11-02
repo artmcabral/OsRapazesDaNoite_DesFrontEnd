@@ -1,6 +1,6 @@
-<div class="nao-encontrada">
+<div class="nao-encontrada" role="alert">
   <p class="codigo">404</p>
-  <h2>Página não encontrada</h2>
-  <p>O endereço que você tentou acessar não existe ou foi movido.</p>
-  <a routerLink="/" class="btn btn-primary">Voltar para a página inicial</a>
+  <h2>{{ titulo() }}</h2>
+  <p>{{ mensagem() }}</p>
+  <a [routerLink]="destino()" class="btn btn-primary">{{ rotuloLink() }}</a>
 </div>
