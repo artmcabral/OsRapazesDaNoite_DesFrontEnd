@@ -6,6 +6,11 @@ const API = 'http://localhost:3000';
 
 export type ProjetoComTarefas = Projeto & { tarefas: Tarefa[] };
 
+
+export function ehNaoEncontrado(erro: unknown): boolean {
+  return erro instanceof Error && erro.message === 'HTTP 404';
+}
+
 @Injectable({ providedIn: 'root' })
 export class Api {
 

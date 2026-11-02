@@ -1,14 +1,14 @@
-
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Api } from '../../../services/api';
+import { Api, ehNaoEncontrado } from '../../../services/api';
 import { Carregando } from '../../../components/carregando/carregando';
 import { MensagemErro } from '../../../components/mensagem-erro/mensagem-erro';
+import { NaoEncontrada } from '../../../paginas/nao-encontrada/nao-encontrada';
 import type { Tarefa } from '../../../../tipos';
 
 @Component({
   selector: 'app-detalhe-tarefa',
-  imports: [Carregando, RouterLink, MensagemErro],
+  imports: [Carregando, RouterLink, MensagemErro, NaoEncontrada],
   templateUrl: './detalhe-tarefa.html',
   styleUrl: './detalhe-tarefa.css',
 })
@@ -21,8 +21,8 @@ export class DetalheTarefa implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // ISSUE #33 - Controle de novas tentativas
-  podeTentarDeNovo = signal(true);
+  // Issue #37 - a tarefa do endereço não existe
+  naoEncontrada = signal(false);
 
   async ngOnInit() {
     await this.carregar();
@@ -35,11 +35,9 @@ export class DetalheTarefa implements OnInit {
 
     this.carregando.set(true);
     this.erro.set(null);
-    this.podeTentarDeNovo.set(true);
 
     if (!id) {
-      this.erro.set('Identificador da tarefa não encontrado.');
-      this.podeTentarDeNovo.set(false);
+      this.naoEncontrada.set(true);
       this.carregando.set(false);
       return;
     }
@@ -53,17 +51,11 @@ export class DetalheTarefa implements OnInit {
 
     } catch (erro) {
 
-      const naoExiste =
-        erro instanceof Error &&
-        erro.message === 'HTTP 404';
-
-      this.erro.set(
-        naoExiste
-          ? 'Tarefa não encontrada.'
-          : 'Não foi possível carregar os detalhes da tarefa.'
-      );
-
-      this.podeTentarDeNovo.set(!naoExiste);
+      if (ehNaoEncontrado(erro)) {
+        this.naoEncontrada.set(true);
+      } else {
+        this.erro.set('Não foi possível carregar os detalhes da tarefa.');
+      }
 
     } finally {
 
