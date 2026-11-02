@@ -8,12 +8,21 @@
       mensagem="Carregando projeto..."
     />
 
+  } @else if (naoEncontrado()) {
+
+    <!-- Issue #37 - Projeto inexistente -->
+    <app-nao-encontrada
+      titulo="Projeto não encontrado"
+      mensagem="Esse projeto não existe ou foi removido."
+      destino="/projetos"
+      rotuloLink="Voltar para projetos"
+    />
+
   } @else if (erro(); as mensagem) {
 
     <!-- ISSUE #33 - Tratamento de erros -->
     <app-mensagem-erro
       [mensagem]="mensagem"
-      [podeTentarDeNovo]="podeTentarDeNovo()"
       (tentarNovamente)="carregar()"
     />
 

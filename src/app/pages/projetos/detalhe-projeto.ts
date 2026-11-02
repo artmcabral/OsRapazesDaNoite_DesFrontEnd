@@ -11,12 +11,13 @@ import {
   RouterLink
 } from '@angular/router';
 
-import { Api } from '../../services/api';
+import { Api, ehNaoEncontrado } from '../../services/api';
 import type { ProjetoComTarefas } from '../../services/api';
 import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
 import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
 import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
+import { NaoEncontrada } from '../../paginas/nao-encontrada/nao-encontrada';
 
 import type { Tarefa } from '../../../tipos';
 
@@ -27,7 +28,8 @@ import type { Tarefa } from '../../../tipos';
     RouterLink,
     TarefaCard,
     MensagemErro,
-    EstadoVazio
+    EstadoVazio,
+    NaoEncontrada
   ],
   templateUrl: './detalhe-projeto.html',
   styleUrl: './detalhe-projeto.css',
@@ -41,8 +43,8 @@ export class DetalheProjeto implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // ISSUE #33 - Controle de novas tentativas
-  podeTentarDeNovo = signal(true);
+  // Issue #37 - o projeto do endereço não existe
+  naoEncontrado = signal(false);
 
   async ngOnInit() {
     await this.carregar();
@@ -55,11 +57,9 @@ export class DetalheProjeto implements OnInit {
 
     this.carregando.set(true);
     this.erro.set(null);
-    this.podeTentarDeNovo.set(true);
 
     if (!id) {
-      this.erro.set('Projeto não encontrado.');
-      this.podeTentarDeNovo.set(false);
+      this.naoEncontrado.set(true);
       this.carregando.set(false);
       return;
     }
@@ -71,17 +71,11 @@ export class DetalheProjeto implements OnInit {
 
     } catch (erro) {
 
-      const naoExiste =
-        erro instanceof Error &&
-        erro.message === 'HTTP 404';
-
-      this.erro.set(
-        naoExiste
-          ? 'Projeto não encontrado.'
-          : 'Não foi possível carregar o projeto.'
-      );
-
-      this.podeTentarDeNovo.set(!naoExiste);
+      if (ehNaoEncontrado(erro)) {
+        this.naoEncontrado.set(true);
+      } else {
+        this.erro.set('Não foi possível carregar o projeto.');
+      }
 
     } finally {
       this.carregando.set(false);
