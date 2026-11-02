@@ -5,6 +5,16 @@
     mensagem="Carregando formulário da tarefa..."
   />
 
+} @else if (naoEncontrada()) {
+
+  <!-- Issue #37 - Editar uma tarefa inexistente -->
+  <app-nao-encontrada
+    titulo="Tarefa não encontrada"
+    mensagem="Essa tarefa não existe ou já foi excluída."
+    destino="/tarefas"
+    rotuloLink="Voltar para tarefas"
+  />
+
 } @else if (erro() && !form.touched) {
 
   <!-- ISSUE #33 - Erro no carregamento inicial da página -->
@@ -168,4 +178,4 @@
 
   </form>
 
-}
+}

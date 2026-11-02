@@ -1,84 +1,98 @@
 
-<div class="container my-4">
+<!-- Issue #37 - Editar um projeto inexistente -->
+@if (naoEncontrado()) {
 
-  <h2>
-    {{ isEdicao() ? 'Editar Projeto' : 'Novo Projeto' }}
-  </h2>
+  <app-nao-encontrada
+    titulo="Projeto não encontrado"
+    mensagem="Esse projeto não existe ou foi removido."
+    destino="/projetos"
+    rotuloLink="Voltar para projetos"
+  />
 
-  <!-- Mensagem de erro existente -->
-  @if (erro()) {
+} @else {
 
-    <div class="alert alert-danger mb-3">
-      {{ erro() }}
-    </div>
+  <div class="container my-4">
 
-  }
+    <h2>
+      {{ isEdicao() ? 'Editar Projeto' : 'Novo Projeto' }}
+    </h2>
 
-  <!-- ISSUE #32 - Indicador de carregamento -->
-  @if (carregando()) {
+    <!-- Mensagem de erro existente -->
+    @if (erro()) {
 
-    <app-carregando
-      mensagem="Carregando projeto..."
-    />
-
-  } @else {
-
-    <form (submit)="salvar($event)">
-
-      <div class="mb-3">
-
-        <label for="nome" class="form-label">
-          Nome do Projeto *
-        </label>
-
-        <input
-          type="text"
-          id="nome"
-          class="form-control"
-          [value]="nome()"
-          (input)="nome.set($any($event.target).value)"
-          required
-        />
-
+      <div class="alert alert-danger mb-3">
+        {{ erro() }}
       </div>
 
-      <div class="mb-3">
+    }
 
-        <label for="descricao" class="form-label">
-          Descrição
-        </label>
+    <!-- ISSUE #32 - Indicador de carregamento -->
+    @if (carregando()) {
 
-        <textarea
-          id="descricao"
-          class="form-control"
-          rows="3"
-          [value]="descricao()"
-          (input)="descricao.set($any($event.target).value)"
-        ></textarea>
+      <app-carregando
+        mensagem="Carregando projeto..."
+      />
 
-      </div>
+    } @else {
 
-      <div class="d-flex gap-2">
+      <form (submit)="salvar($event)">
 
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="carregando()"
-        >
-          {{ isEdicao() ? 'Salvar Alterações' : 'Criar Projeto' }}
-        </button>
+        <div class="mb-3">
 
-        <a
-          routerLink="/projetos"
-          class="btn btn-secondary"
-        >
-          Cancelar
-        </a>
+          <label for="nome" class="form-label">
+            Nome do Projeto *
+          </label>
 
-      </div>
+          <input
+            type="text"
+            id="nome"
+            class="form-control"
+            [value]="nome()"
+            (input)="nome.set($any($event.target).value)"
+            required
+          />
 
-    </form>
+        </div>
 
-  }
+        <div class="mb-3">
 
-</div>
+          <label for="descricao" class="form-label">
+            Descrição
+          </label>
+
+          <textarea
+            id="descricao"
+            class="form-control"
+            rows="3"
+            [value]="descricao()"
+            (input)="descricao.set($any($event.target).value)"
+          ></textarea>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="carregando()"
+          >
+            {{ isEdicao() ? 'Salvar Alterações' : 'Criar Projeto' }}
+          </button>
+
+          <a
+            routerLink="/projetos"
+            class="btn btn-secondary"
+          >
+            Cancelar
+          </a>
+
+        </div>
+
+      </form>
+
+    }
+
+  </div>
+
+}

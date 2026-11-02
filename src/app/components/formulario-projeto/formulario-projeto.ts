@@ -3,8 +3,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Api } from '../../services/api';
+import { Api, ehNaoEncontrado } from '../../services/api';
 import { Carregando } from '../carregando/carregando';
+import { NaoEncontrada } from '../../paginas/nao-encontrada/nao-encontrada';
 
 @Component({
   selector: 'app-formulario-projeto',
@@ -13,7 +14,8 @@ import { Carregando } from '../carregando/carregando';
     CommonModule,
     FormsModule,
     RouterLink,
-    Carregando
+    Carregando,
+    NaoEncontrada
   ],
   templateUrl: './formulario-projeto.html',
   styleUrl: './formulario-projeto.css',
@@ -30,6 +32,9 @@ export class FormularioProjeto implements OnInit {
 
   carregando = signal<boolean>(false);
   erro = signal<string | null>(null);
+
+  // Issue #37 - o projeto da edição não existe
+  naoEncontrado = signal(false);
 
   isEdicao = signal<boolean>(false);
 
@@ -63,9 +68,13 @@ export class FormularioProjeto implements OnInit {
 
     } catch (e: any) {
 
-      this.erro.set(
-        'Erro ao carregar dados do projeto.'
-      );
+      if (ehNaoEncontrado(e)) {
+        this.naoEncontrado.set(true);
+      } else {
+        this.erro.set(
+          'Erro ao carregar dados do projeto.'
+        );
+      }
 
     } finally {
 

@@ -15,9 +15,10 @@ import {
 } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Api } from '../../services/api';
+import { Api, ehNaoEncontrado } from '../../services/api';
 import { Carregando } from '../carregando/carregando';
 import { MensagemErro } from '../mensagem-erro/mensagem-erro';
+import { NaoEncontrada } from '../../paginas/nao-encontrada/nao-encontrada';
 
 import type {
   NovaTarefa,
@@ -35,7 +36,8 @@ type CampoObrigatorio =
   imports: [
     ReactiveFormsModule,
     Carregando,
-    MensagemErro
+    MensagemErro,
+    NaoEncontrada
   ],
   templateUrl: './formulario-tarefa.html',
   styleUrl: './formulario-tarefa.css',
@@ -57,6 +59,9 @@ export class FormularioTarefa implements OnInit {
   // ISSUE #32 / ISSUE #38 - Estados de carregamento e erro[cite: 15]
   carregando = signal(true);
   erro = signal<string | null>(null);
+
+  // Issue #37 - a tarefa da edição não existe
+  naoEncontrada = signal(false);
 
   private tarefaAtual: Tarefa | null = null;
 
@@ -155,14 +160,18 @@ export class FormularioTarefa implements OnInit {
 
     } catch (erro) {
 
-      console.error(
-        'Erro ao carregar formulário da tarefa:',
-        erro
-      );
+      if (ehNaoEncontrado(erro)) {
+        this.naoEncontrada.set(true);
+      } else {
+        console.error(
+          'Erro ao carregar formulário da tarefa:',
+          erro
+        );
 
-      this.erro.set(
-        'Não foi possível carregar os dados do formulário.'
-      );
+        this.erro.set(
+          'Não foi possível carregar os dados do formulário.'
+        );
+      }
 
     } finally {
 
@@ -232,4 +241,4 @@ export class FormularioTarefa implements OnInit {
 
     }
   }
-}
+}
