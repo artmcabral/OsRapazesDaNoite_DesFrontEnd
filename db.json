@@ -13,6 +13,12 @@
       "descricao": "Trabalho de modelagem de dados",
       "disciplina": "Banco de Dados",
       "criadoEm": "2026-10-02"
+    },
+    {
+      "titulo": "Back End",
+      "nome": "Back End",
+      "descricao": "Atividades de backend\n",
+      "id": "ZZFHRnAYU1I"
     }
   ],
   "tarefas": [
@@ -41,7 +47,7 @@
       "projetoId": "1",
       "titulo": "Montar o quadro no GitHub Projects",
       "descricao": "Colunas por status e uma tarefa por marco",
-      "status": "em-revisao",
+      "status": "a-fazer",
       "prioridade": "media",
       "responsavel": "Carla",
       "prazo": "2026-10-07"
