@@ -1,8 +1,10 @@
 
 import { Injectable } from '@angular/core';
 import type { NovaTarefa, Projeto, Tarefa } from '../../tipos';
+import { environment } from '../../environments/environment';
 
-const API = 'http://localhost:3000';
+// Endereço da API: localhost em desenvolvimento, Render em produção
+const API = environment.apiUrl;
 
 export type ProjetoComTarefas = Projeto & { tarefas: Tarefa[] };
 
