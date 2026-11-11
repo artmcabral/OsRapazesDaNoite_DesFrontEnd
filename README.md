@@ -21,3 +21,8 @@ Pré-requisito: Node.js 24.15 ou mais recente.
 2. Em um terminal, suba a API local: `npx json-server db.json` (porta 3000)
 3. Em outro terminal, rode o app: `npm run dev`
 4. Abra http://localhost:4200
+
+5. ## 🚀 Deploy
+
+A aplicação está publicada e pode ser acessada em:
+[https://osrapazesdanoite-desfrontend.vercel.app](https://osrapazesdanoite-desfrontend.vercel.app)
