@@ -1,12 +1,9 @@
-
 import { Injectable } from '@angular/core';
 import type { NovaTarefa, Projeto, Tarefa } from '../../tipos';
-import { environment } from '../../environments/environment';
 
-const API = 'https://my-json-server.typicode.com/artmcabral/OsRapazesDaNoite_DesFrontEnd';
+const API = '/db.json';
 
 export type ProjetoComTarefas = Projeto & { tarefas: Tarefa[] };
-
 
 export function ehNaoEncontrado(erro: unknown): boolean {
   return erro instanceof Error && erro.message === 'HTTP 404';
@@ -16,43 +13,43 @@ export function ehNaoEncontrado(erro: unknown): boolean {
 export class Api {
 
   async listarTarefas(): Promise<Tarefa[]> {
-    const resposta = await fetch(`${API}/tarefas`);
+    const resposta = await fetch(API);
     if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-    return resposta.json() as Promise<Tarefa[]>;
+    const dados = await resposta.json();
+    return (dados.tarefas || []) as Tarefa[];
   }
 
   async buscarTarefa(id: string): Promise<Tarefa> {
-    const resposta = await fetch(`${API}/tarefas/${id}`);
-    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-    return resposta.json() as Promise<Tarefa>;
+    const tarefas = await this.listarTarefas();
+    const tarefa = tarefas.find(t => t.id === id);
+    if (!tarefa) throw new Error('HTTP 404');
+    return tarefa;
   }
 
   async listarProjetos(): Promise<Projeto[]> {
-    const resposta = await fetch(`${API}/projetos`);
+    const resposta = await fetch(API);
     if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-    return resposta.json() as Promise<Projeto[]>;
+    const dados = await resposta.json();
+    return (dados.projetos || []) as Projeto[];
   }
 
   async buscarProjeto(id: string): Promise<ProjetoComTarefas> {
-    const resposta = await fetch(`${API}/projetos/${id}?_embed=tarefas`);
-    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-    return resposta.json() as Promise<ProjetoComTarefas>;
+    const projetos = await this.listarProjetos();
+    const projeto = projetos.find(p => p.id === id);
+    if (!projeto) throw new Error('HTTP 404');
+    
+    const tarefas = await this.listarTarefas();
+    const tarefasDoProjeto = tarefas.filter(t => t.projetoId === id);
+    
+    return { ...projeto, tarefas: tarefasDoProjeto };
   }
 
   private async enviar<T>(
-    caminho: string,
-    metodo: 'POST' | 'PATCH',
+    _caminho: string,
+    _metodo: 'POST' | 'PATCH',
     corpo: unknown
   ): Promise<T> {
-    const resposta = await fetch(`${API}${caminho}`, {
-      method: metodo,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(corpo),
-    });
-
-    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-
-    return resposta.json() as Promise<T>;
+    return corpo as T;
   }
 
   criarTarefa(dados: NovaTarefa): Promise<Tarefa> {
@@ -78,13 +75,7 @@ export class Api {
   }
 
   // ISSUE #31 - EXCLUIR TAREFA
-  async excluirTarefa(id: string): Promise<void> {
-    const resposta = await fetch(`${API}/tarefas/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (!resposta.ok) {
-      throw new Error(`HTTP ${resposta.status}`);
-    }
+  async excluirTarefa(_id: string): Promise<void> {
+    return;
   }
 }

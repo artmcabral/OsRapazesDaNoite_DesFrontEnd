@@ -1,0 +1,96 @@
+{
+  "projetos": [
+    {
+      "id": "1",
+      "nome": "Gerenciador de Tarefas",
+      "descricao": "Projeto em equipe da disciplina",
+      "disciplina": "Desenvolvimento Frontend",
+      "criadoEm": "2026-10-01"
+    },
+    {
+      "id": "2",
+      "nome": "Modelagem da Biblioteca",
+      "descricao": "Trabalho de modelagem de dados",
+      "disciplina": "Banco de Dados",
+      "criadoEm": "2026-10-02"
+    },
+    {
+      "titulo": "Back End",
+      "nome": "Back End",
+      "descricao": "Atividades de backend",
+      "id": "ZZFHRnAYU1I"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "2",
+      "projetoId": "1",
+      "titulo": "Subir o json-server",
+      "descricao": "API local a partir do db.json",
+      "status": "em-andamento",
+      "prioridade": "alta",
+      "responsavel": "Bruno",
+      "prazo": "2026-10-06"
+    },
+    {
+      "id": "3",
+      "projetoId": "1",
+      "titulo": "Montar o quadro no GitHub Projects",
+      "descricao": "Colunas por status e uma tarefa por marco",
+      "status": "a-fazer",
+      "prioridade": "media",
+      "responsavel": "Carla",
+      "prazo": "2026-10-07"
+    },
+    {
+      "id": "4",
+      "projetoId": "1",
+      "titulo": "Listar as tarefas na tela",
+      "descricao": "Primeira entrega do Marco 2",
+      "status": "a-fazer",
+      "prioridade": "media",
+      "responsavel": "Diego",
+      "prazo": "2026-10-14"
+    },
+    {
+      "id": "5",
+      "projetoId": "2",
+      "titulo": "Desenhar o diagrama ER",
+      "descricao": "Entidades livro, leitor e empréstimo",
+      "status": "a-fazer",
+      "prioridade": "baixa",
+      "responsavel": "Ana",
+      "prazo": "2026-10-20"
+    },
+    {
+      "id": "6",
+      "projetoId": "1",
+      "titulo": "Criar a barra de busca e filtros",
+      "descricao": "Componente compartilhado entre a lista e o quadro",
+      "status": "concluida",
+      "prioridade": "alta",
+      "responsavel": "Bruno",
+      "prazo": "2026-10-21"
+    },
+    {
+      "id": "7",
+      "projetoId": "1",
+      "titulo": "Aplicar o tema visual da aplicação",
+      "descricao": "Estilos globais com variáveis de cor",
+      "status": "em-andamento",
+      "prioridade": "media",
+      "responsavel": "Carla",
+      "prazo": "2026-11-04"
+    },
+    {
+      "id": "8",
+      "projetoId": "2",
+      "titulo": "Definir chaves e relacionamentos",
+      "descricao": "Chaves primárias e estrangeiras",
+      "status": "a-fazer",
+      "prioridade": "media",
+      "responsavel": "Diego",
+      "prazo": "2026-11-11"
+    }
+  ]
+}
