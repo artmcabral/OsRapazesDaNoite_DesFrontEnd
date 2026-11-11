@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import type { NovaTarefa, Projeto, Tarefa } from '../../tipos';
 
+// IMPORTANTE: NÃO importar environment aqui!
+
 const DADOS_INICIAIS = {
   projetos: [
     {
