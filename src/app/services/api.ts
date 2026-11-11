@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import type { NovaTarefa, Projeto, Tarefa } from '../../tipos';
 import { environment } from '../../environments/environment';
 
-// Endereço da API: localhost em desenvolvimento, Render em produção
-const API = environment.apiUrl;
+const API = 'https://my-json-server.typicode.com/artmcabal/OsRapazesDaNoite_DesFrontEnd';
 
 export type ProjetoComTarefas = Projeto & { tarefas: Tarefa[] };
 

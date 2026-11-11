@@ -23,16 +23,6 @@
   ],
   "tarefas": [
     {
-      "id": "1",
-      "projetoId": "1",
-      "titulo": "Criar o repositório",
-      "descricao": "Repositório da equipe no GitHub, com todos os integrantes",
-      "status": "concluida",
-      "prioridade": "alta",
-      "responsavel": "Ana",
-      "prazo": "2026-10-06"
-    },
-    {
       "id": "2",
       "projetoId": "1",
       "titulo": "Subir o json-server",
