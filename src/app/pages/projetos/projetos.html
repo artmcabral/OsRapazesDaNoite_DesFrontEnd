@@ -1,7 +1,13 @@
 
 <section>
 
-  <h2>Projetos</h2>
+  <header class="topo">
+    <p class="sobretitulo">Constelações</p>
+    <h2>Projetos</h2>
+    <p class="subtitulo">
+      Cada estrela é uma tarefa do projeto — ela acende quando é concluída.
+    </p>
+  </header>
 
   <!-- ISSUE #32 - Carregamento -->
   @if (carregando()) {
@@ -49,6 +55,27 @@
             </h3>
 
             <p>{{ projeto.descricao }}</p>
+
+            <!-- Constelação: uma estrela por tarefa -->
+            <div
+              class="constelacao"
+              role="img"
+              [attr.aria-label]="concluidas(projeto.id) + ' de ' + estrelas(projeto.id).length + ' tarefas concluídas'"
+            >
+              @for (acesa of estrelas(projeto.id); track $index) {
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"
+                  [class.acesa]="acesa">
+                  <path d="M12 2.5l2.6 6.2 6.7.5-5.1 4.4 1.6 6.5L12 16.6l-5.8 3.5 1.6-6.5-5.1-4.4 6.7-.5z" />
+                </svg>
+              } @empty {
+                <span class="ceu-vazio">Céu vazio — nenhuma tarefa ainda.</span>
+              }
+            </div>
+
+            <p class="progresso">
+              <strong>{{ concluidas(projeto.id) }}</strong>
+              de {{ estrelas(projeto.id).length }} concluídas
+            </p>
 
             <p>
               <strong>Disciplina:</strong>

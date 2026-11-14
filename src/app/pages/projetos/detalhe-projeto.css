@@ -22,7 +22,7 @@ section > p strong {
 }
 
 .link-voltar:hover {
-  color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
 }
 
 .cabecalho-tarefas {
@@ -46,7 +46,7 @@ section > p strong {
   padding: 0.55rem 1.1rem;
   border-radius: var(--raio-sm);
   background: var(--cor-primaria);
-  color: #fff;
+  color: var(--cor-sobre-primaria);
   font-size: 0.9rem;
   font-weight: 600;
   transition: background var(--transicao), box-shadow var(--transicao);
@@ -54,7 +54,7 @@ section > p strong {
 
 .btn-primario:hover {
   background: var(--cor-primaria-hover);
-  color: #fff;
+  color: var(--cor-sobre-primaria);
   box-shadow: var(--sombra-sm);
 }
 
@@ -85,7 +85,7 @@ section > p strong {
 }
 
 .btn-editar:hover {
-  color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
   border-color: var(--cor-primaria);
 }
 

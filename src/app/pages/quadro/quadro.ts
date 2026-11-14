@@ -18,6 +18,7 @@ import { TarefaCard } from '../../components/tarefa-card/tarefa-card';
 import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
 import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
+import { FaseLua } from '../../components/fase-lua/fase-lua';
 
 import type { Status, Tarefa } from '../../../tipos';
 
@@ -31,6 +32,7 @@ import type { Status, Tarefa } from '../../../tipos';
     Carregando,
     MensagemErro,
     EstadoVazio,
+    FaseLua,
     RouterLink
   ],
   templateUrl: './quadro.html',
@@ -45,16 +47,27 @@ export class Quadro implements OnInit {
   carregando = signal(true);
   erro = signal<string | null>(null);
 
-  // Colunas do quadro Kanban
+  // Colunas do quadro Kanban — cada status é uma fase da lua
   readonly colunas: {
     status: Status;
     titulo: string;
+    fase: string;
   }[] = [
-    { status: 'a-fazer', titulo: 'A fazer' },
-    { status: 'em-andamento', titulo: 'Em andamento' },
-    { status: 'em-revisao', titulo: 'Em revisão' },
-    { status: 'concluida', titulo: 'Concluída' },
+    { status: 'a-fazer', titulo: 'A fazer', fase: 'Lua nova' },
+    { status: 'em-andamento', titulo: 'Em andamento', fase: 'Lua crescente' },
+    { status: 'em-revisao', titulo: 'Em revisão', fase: 'Lua gibosa' },
+    { status: 'concluida', titulo: 'Concluída', fase: 'Lua cheia' },
   ];
+
+  // Progresso da equipe (considera todas as tarefas, sem filtros)
+  readonly totalConcluidas = computed(() =>
+    this.tarefas().filter(t => t.status === 'concluida').length
+  );
+
+  readonly percentualConcluido = computed(() => {
+    const total = this.tarefas().length;
+    return total ? Math.round((this.totalConcluidas() / total) * 100) : 0;
+  });
 
   // Aplica os filtros compartilhados
   readonly tarefasFiltradas = computed(() =>

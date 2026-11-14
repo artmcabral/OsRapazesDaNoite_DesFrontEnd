@@ -2,15 +2,16 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: linear-gradient(135deg, var(--cor-primaria) 0%, #2f5c47 100%);
-  color: #fff;
-  box-shadow: var(--sombra-md);
+  background: var(--cor-cabecalho);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cor-borda);
+  color: var(--cor-texto);
 }
 
 .cabecalho-conteudo {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0.9rem 1.5rem;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -21,59 +22,111 @@
 .marca {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  color: #fff;
+  gap: 0.75rem;
+  color: var(--cor-texto);
+  font-family: var(--fonte-titulo);
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 .marca:hover {
-  color: #fff;
+  color: var(--cor-texto);
 }
 
+/* Lua da marca, com brilho */
 .marca-icone {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgb(255 255 255 / 0.12);
-  font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--cor-superficie-2);
+  color: var(--status-concluida);
+  box-shadow: var(--brilho-lua);
 }
 
 .cabecalho nav {
   display: flex;
   gap: 0.25rem;
-  background: rgb(0 0 0 / 0.15);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
   padding: 0.25rem;
   border-radius: 999px;
 }
 
 .cabecalho nav a {
-  color: rgb(255 255 255 / 0.8);
+  color: var(--cor-texto-suave);
   font-weight: 500;
   font-size: 0.9rem;
-  padding: 0.45rem 1rem;
+  padding: 0.6rem 1.15rem;
   border-radius: 999px;
   transition: background var(--transicao), color var(--transicao);
 }
 
 .cabecalho nav a:hover {
-  color: #fff;
-  background: rgb(255 255 255 / 0.1);
+  color: var(--cor-texto);
+  background: var(--cor-superficie-2);
 }
 
 .cabecalho nav a.ativo {
-  color: var(--cor-primaria);
-  background: #fff;
+  color: var(--cor-sobre-primaria);
+  background: var(--cor-primaria);
   font-weight: 600;
+}
+
+/* Tema + botão de nova tarefa */
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.seletor-tema {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: 999px;
+}
+
+.seletor-tema button {
+  min-height: 40px;
+  padding: 0 0.9rem;
+  background: transparent;
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+}
+
+.seletor-tema button:hover:not(.ativo) {
+  background: var(--cor-superficie-2);
+  color: var(--cor-texto);
+  box-shadow: none;
+}
+
+.seletor-tema button.ativo {
+  background: var(--cor-primaria);
+  color: var(--cor-sobre-primaria);
 }
 
 main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 3rem;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+.rodape {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.rodape p {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--cor-texto-fraco);
 }
 
 @media (max-width: 600px) {
@@ -89,10 +142,18 @@ main {
   .cabecalho nav a {
     flex: 1;
     text-align: center;
-    padding: 0.45rem 0.5rem;
+    padding: 0.6rem 0.5rem;
+  }
+
+  .acoes {
+    width: 100%;
+  }
+
+  .nova-tarefa {
+    flex: 1;
   }
 
   main {
-    padding: 1.25rem 1rem 2rem;
+    padding: 1.5rem 1rem 2rem;
   }
 }

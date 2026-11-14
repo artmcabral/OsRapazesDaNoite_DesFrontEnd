@@ -4,6 +4,19 @@
   [class]="'status-' + tarefa().status"
 >
 
+  <!-- Fase da lua (status) e marcadores -->
+  <div class="cartao-topo">
+    <app-fase-lua [status]="tarefa().status" [tamanho]="22" [rotulo]="true" />
+
+    <span [class]="'pill prioridade-' + tarefa().prioridade">
+      {{ rotuloPrioridade[tarefa().prioridade] }}
+    </span>
+
+    @if (atrasada()) {
+      <span class="pill atrasada">Atrasada</span>
+    }
+  </div>
+
   <!-- Título com link para detalhes -->
   <h3>
     <a
@@ -18,15 +31,11 @@
   <dl>
 
     <div>
-      <dt>Prioridade</dt>
-      <dd>
-        {{ rotuloPrioridade[tarefa().prioridade] }}
-      </dd>
-    </div>
-
-    <div>
       <dt>Responsável</dt>
-      <dd>{{ tarefa().responsavel }}</dd>
+      <dd class="responsavel">
+        <span class="avatar" aria-hidden="true">{{ tarefa().responsavel.charAt(0) }}</span>
+        {{ tarefa().responsavel }}
+      </dd>
     </div>
 
     <div>
@@ -55,7 +64,10 @@
         opcao of statusDisponiveis;
         track opcao.valor
       ) {
-        <option [value]="opcao.valor">
+        <option
+          [value]="opcao.valor"
+          [selected]="opcao.valor === tarefa().status"
+        >
           {{ opcao.rotulo }}
         </option>
       }
@@ -71,6 +83,10 @@
     [disabled]="salvando() || excluindo()"
     (click)="excluir()"
   >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+    </svg>
     {{ excluindo() ? 'Excluindo...' : 'Excluir' }}
   </button>
 

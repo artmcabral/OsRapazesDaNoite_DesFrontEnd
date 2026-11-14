@@ -3,41 +3,128 @@
    Variáveis de design usadas por todos os componentes
    ========================================================= */
 :root {
+  /* Tema "Céu noturno" — protótipo da equipe */
+
   /* Marca */
-  --cor-primaria: #244536;
-  --cor-primaria-hover: #1b3529;
-  --cor-primaria-clara: #e7f0eb;
-  --cor-destaque: #52b788;
+  --cor-primaria: #f4d58d;          /* dourado da lua */
+  --cor-primaria-hover: #ffe7b0;
+  --cor-primaria-clara: #1a2349;
+  --cor-sobre-primaria: #0a0f24;    /* texto em cima do dourado */
+  --cor-primaria-texto: #f4d58d;    /* dourado usado como cor de texto */
+  --cor-cabecalho: rgb(10 15 36 / 0.9);
+  --cor-foco-campo: rgb(244 213 141 / 0.2);
+  --cor-destaque: #7cc4ff;          /* azul das estrelas */
 
-  /* Neutros */
-  --cor-fundo: #f4f6f5;
-  --cor-superficie: #ffffff;
-  --cor-borda: #e2e8e5;
-  --cor-borda-forte: #c9d3ce;
-  --cor-texto: #1f2a24;
-  --cor-texto-suave: #5b6b63;
-  --cor-texto-fraco: #8a9a92;
+  /* Neutros (céu) */
+  --cor-fundo: #0a0f24;
+  --cor-superficie: #131a38;
+  --cor-superficie-2: #1a2349;
+  --cor-campo: #0e1430;
+  --cor-coluna: rgb(14 20 48 / 0.8);
+  --cor-borda: #263063;
+  --cor-borda-forte: #33407a;
+  --cor-texto: #eceefb;
+  --cor-texto-suave: #a6aed6;
+  --cor-texto-fraco: #8c95c2;
 
-  /* Status */
-  --status-a-fazer: #94a3b8;
-  --status-em-andamento: #3b82f6;
-  --status-em-revisao: #f59e0b;
-  --status-concluida: #22a06b;
+  /* Status = fases da lua */
+  --status-a-fazer: #9aa4cc;        /* lua nova */
+  --status-em-andamento: #7cc4ff;   /* lua crescente */
+  --status-em-revisao: #c9a0ff;     /* lua gibosa */
+  --status-concluida: #f4d58d;      /* lua cheia */
+
+  /* Prioridades */
+  --prioridade-alta-fundo: #3a1f2e;
+  --prioridade-alta-texto: #ffb3a3;
+  --prioridade-media-fundo: #3a3220;
+  --prioridade-media-texto: #f4d58d;
+  --prioridade-baixa-fundo: #1e2a4a;
+  --prioridade-baixa-texto: #a9c4ff;
 
   /* Feedback */
-  --cor-erro: #c0392b;
-  --cor-erro-fundo: #fdecea;
+  --cor-erro: #ff9b85;
+  --cor-erro-fundo: #2a1a2e;
+  --cor-erro-borda: rgb(255 155 133 / 0.4);
+
+  /* Detalhes do céu */
+  --cor-concluida-borda: rgb(244 213 141 / 0.35);
+  --cor-estrela-apagada: #5a659b;
+  --brilho-estrela: rgb(244 213 141 / 0.6);
+  --ceu-estrelas:
+    radial-gradient(1px 1px at 24px 36px, rgb(255 255 255 / 0.8) 50%, transparent 51%),
+    radial-gradient(1px 1px at 140px 90px, rgb(255 255 255 / 0.53) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 220px 20px, rgb(244 213 141 / 0.67) 50%, transparent 51%),
+    radial-gradient(1px 1px at 80px 200px, rgb(255 255 255 / 0.47) 50%, transparent 51%),
+    radial-gradient(1px 1px at 260px 240px, rgb(169 196 255 / 0.6) 50%, transparent 51%);
 
   /* Formas */
-  --raio-sm: 6px;
-  --raio-md: 10px;
-  --raio-lg: 14px;
-  --sombra-sm: 0 1px 2px rgb(16 24 20 / 0.06);
-  --sombra-md: 0 4px 12px rgb(16 24 20 / 0.08);
-  --sombra-lg: 0 10px 24px rgb(16 24 20 / 0.12);
+  --raio-sm: 10px;
+  --raio-md: 14px;
+  --raio-lg: 18px;
+  --sombra-sm: 0 1px 2px rgb(4 7 20 / 0.4);
+  --sombra-md: 0 8px 24px rgb(4 7 20 / 0.4);
+  --sombra-lg: 0 12px 32px rgb(4 7 20 / 0.5);
+  --brilho-lua: 0 0 24px rgb(244 213 141 / 0.27);
   --transicao: 0.18s ease;
 
   --fonte: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --fonte-titulo: 'Space Grotesk', 'Inter', 'Segoe UI', sans-serif;
+
+  color-scheme: dark;
+}
+
+/* =========================================================
+   Tema "Dia" (claro) — ativado por <html data-tema="dia">
+   Só troca as variáveis; os componentes não mudam.
+   ========================================================= */
+:root[data-tema='dia'] {
+  --cor-primaria: #f5b83d;          /* amarelo do sol */
+  --cor-primaria-hover: #ffc95c;
+  --cor-primaria-clara: #fff4d6;
+  --cor-sobre-primaria: #16204a;
+  --cor-primaria-texto: #8a5a00;
+  --cor-destaque: #1f6fc4;
+  --cor-cabecalho: rgb(255 255 255 / 0.9);
+  --cor-foco-campo: rgb(245 184 61 / 0.3);
+
+  --cor-fundo: #eef3fb;
+  --cor-superficie: #ffffff;
+  --cor-superficie-2: #fff4d6;
+  --cor-campo: #f6f8fd;
+  --cor-coluna: #e4ebf7;
+  --cor-borda: #d5deee;
+  --cor-borda-forte: #aebbd6;
+  --cor-texto: #16204a;
+  --cor-texto-suave: #46527e;
+  --cor-texto-fraco: #5c6890;
+
+  --status-a-fazer: #6e7aa6;
+  --status-em-andamento: #1f6fc4;
+  --status-em-revisao: #7e44cf;
+  --status-concluida: #e0a020;
+
+  --prioridade-alta-fundo: #fde3dd;
+  --prioridade-alta-texto: #9c2f1c;
+  --prioridade-media-fundo: #fbefcb;
+  --prioridade-media-texto: #6e4e00;
+  --prioridade-baixa-fundo: #dfe9fb;
+  --prioridade-baixa-texto: #24519e;
+
+  --cor-erro: #b93a26;
+  --cor-erro-fundo: #fdecea;
+  --cor-erro-borda: rgb(185 58 38 / 0.4);
+
+  --cor-concluida-borda: rgb(224 160 32 / 0.5);
+  --cor-estrela-apagada: #aebbd6;
+  --brilho-estrela: rgb(245 184 61 / 0.5);
+  --ceu-estrelas: none;
+
+  --sombra-sm: 0 1px 2px rgb(22 32 74 / 0.06);
+  --sombra-md: 0 8px 24px rgb(22 32 74 / 0.08);
+  --sombra-lg: 0 12px 32px rgb(22 32 74 / 0.12);
+  --brilho-lua: 0 0 24px rgb(245 184 61 / 0.4);
+
+  color-scheme: light;
 }
 
 *,
@@ -56,8 +143,13 @@ body {
   font-size: 15px;
   line-height: 1.5;
   color: var(--cor-texto);
-  background: var(--cor-fundo);
+  background-color: var(--cor-fundo);
+  /* Estrelas espalhadas pelo céu */
+  background-image: var(--ceu-estrelas);
+  background-size: 300px 300px;
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4 {
@@ -66,9 +158,14 @@ h1, h2, h3, h4 {
   letter-spacing: -0.01em;
 }
 
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+}
+
 h2 {
-  font-size: 1.75rem;
+  font-size: 2.5rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
   margin: 0 0 1.5rem;
 }
 
@@ -82,13 +179,13 @@ p {
 }
 
 a {
-  color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
   text-decoration: none;
   transition: color var(--transicao);
 }
 
 a:hover {
-  color: var(--cor-destaque);
+  color: var(--cor-texto);
 }
 
 :focus-visible {
@@ -103,10 +200,11 @@ textarea {
   font: inherit;
   font-size: 0.9rem;
   color: var(--cor-texto);
-  background: var(--cor-superficie);
+  background: var(--cor-campo);
   border: 1px solid var(--cor-borda-forte);
   border-radius: var(--raio-sm);
   padding: 0.6rem 0.8rem;
+  min-height: 44px;
   transition: border-color var(--transicao), box-shadow var(--transicao);
 }
 
@@ -116,12 +214,17 @@ textarea:hover {
   border-color: var(--cor-texto-fraco);
 }
 
+select option {
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
   border-color: var(--cor-primaria);
-  box-shadow: 0 0 0 3px rgb(36 69 54 / 0.15);
+  box-shadow: 0 0 0 3px var(--cor-foco-campo);
 }
 
 textarea {
@@ -144,7 +247,8 @@ button,
   font-size: 0.9rem;
   font-weight: 600;
   padding: 0.6rem 1.1rem;
-  border-radius: var(--raio-sm);
+  min-height: 44px;
+  border-radius: 999px;
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
@@ -155,14 +259,14 @@ button,
 button,
 .btn-primary {
   background: var(--cor-primaria);
-  color: #fff;
+  color: var(--cor-sobre-primaria);
 }
 
 button:hover:not(:disabled),
 .btn-primary:hover {
   background: var(--cor-primaria-hover);
-  color: #fff;
-  box-shadow: var(--sombra-sm);
+  color: var(--cor-sobre-primaria);
+  box-shadow: var(--brilho-lua);
 }
 
 button:active:not(:disabled),
@@ -176,13 +280,13 @@ button:disabled {
 }
 
 .btn-secondary {
-  background: var(--cor-superficie);
+  background: transparent;
   color: var(--cor-texto);
   border-color: var(--cor-borda-forte);
 }
 
 .btn-secondary:hover {
-  background: var(--cor-fundo);
+  background: var(--cor-superficie-2);
   color: var(--cor-texto);
 }
 
@@ -191,7 +295,7 @@ button:disabled {
 .alert-danger {
   background: var(--cor-erro-fundo);
   color: var(--cor-erro);
-  border: 1px solid #f5c2bd;
+  border: 1px solid var(--cor-erro-borda);
   border-radius: var(--raio-sm);
   padding: 0.75rem 1rem;
 }
@@ -206,6 +310,6 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 a:focus-visible {
-  outline: 3px solid #38bdf8 !important;
+  outline: 3px solid var(--cor-destaque) !important;
   outline-offset: 2px !important;
-}
+}

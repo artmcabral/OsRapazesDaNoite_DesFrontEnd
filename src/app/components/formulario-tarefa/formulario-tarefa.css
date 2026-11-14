@@ -50,7 +50,7 @@ button[type='submit'] {
 
 [aria-invalid='true'] {
   border-color: var(--cor-erro);
-  box-shadow: 0 0 0 3px rgb(192 57 43 / 0.12);
+  box-shadow: 0 0 0 3px var(--cor-foco-campo);
 }
 
 /* ISSUE #39: Ajuste do formulário em dispositivos móveis */
@@ -62,4 +62,4 @@ button[type='submit'] {
   button[type='submit'] {
     justify-self: stretch;
   }
-}
+}

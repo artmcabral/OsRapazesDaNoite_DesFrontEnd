@@ -10,24 +10,24 @@
 .lista-projetos article {
   position: relative;
   height: 100%;
-  padding: 1.25rem 1.4rem;
+  padding: 1.5rem;
   background: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-md);
-  box-shadow: var(--sombra-sm);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-md);
   transition: transform var(--transicao), box-shadow var(--transicao),
     border-color var(--transicao);
 }
 
 .lista-projetos article:hover {
   transform: translateY(-2px);
-  box-shadow: var(--sombra-md);
+  box-shadow: var(--sombra-lg);
   border-color: var(--cor-borda-forte);
 }
 
 .lista-projetos h3 {
   margin: 0 0 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
 }
 
 .lista-projetos h3 a {
@@ -43,7 +43,7 @@
 }
 
 .lista-projetos article:hover h3 a {
-  color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
 }
 
 .lista-projetos p {
@@ -60,4 +60,69 @@
 .lista-projetos strong {
   font-weight: 600;
   color: var(--cor-texto);
+}
+
+/* Cabeçalho da página */
+.topo {
+  margin-bottom: 1.75rem;
+}
+
+.topo h2 {
+  margin: 0.25rem 0 0.4rem;
+}
+
+.sobretitulo {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+/* Constelação do projeto */
+.constelacao {
+  min-height: 56px;
+  margin: 0 0 0.75rem;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--cor-campo);
+  border-radius: var(--raio-md);
+}
+
+.constelacao svg path {
+  fill: none;
+  stroke: var(--cor-estrela-apagada);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.constelacao svg.acesa path {
+  fill: var(--status-concluida);
+  stroke: var(--status-concluida);
+}
+
+.constelacao svg.acesa {
+  filter: drop-shadow(0 0 6px var(--brilho-estrela));
+}
+
+.ceu-vazio {
+  font-size: 0.85rem;
+  color: var(--cor-texto-fraco);
+}
+
+.lista-projetos .progresso {
+  margin-bottom: 0.75rem;
+}
+
+.lista-projetos .progresso strong {
+  color: var(--cor-primaria-texto);
 }

@@ -1,10 +1,21 @@
-
 <header class="cabecalho">
 
   <div class="cabecalho-conteudo">
 
     <a routerLink="/tarefas" class="marca">
-      <span class="marca-icone" aria-hidden="true">🌙</span>
+      <span class="marca-icone" aria-hidden="true">
+        @if (temaService.tema() === 'noite') {
+          <svg width="22" height="22" viewBox="0 0 24 24">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="currentColor" />
+          </svg>
+        } @else {
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" fill="currentColor" />
+            <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        }
+      </span>
       <span>Os Rapazes da Noite</span>
     </a>
 
@@ -33,6 +44,46 @@
 
     </nav>
 
+    <div class="acoes">
+
+      <!-- Alternar tema: Noite (escuro) / Dia (claro) -->
+      <div class="seletor-tema" role="group" aria-label="Tema">
+        <button
+          type="button"
+          [class.ativo]="temaService.tema() === 'noite'"
+          [attr.aria-pressed]="temaService.tema() === 'noite'"
+          (click)="temaService.alterar('noite')"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="currentColor" />
+          </svg>
+          Noite
+        </button>
+        <button
+          type="button"
+          [class.ativo]="temaService.tema() === 'dia'"
+          [attr.aria-pressed]="temaService.tema() === 'dia'"
+          (click)="temaService.alterar('dia')"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" />
+            <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          Dia
+        </button>
+      </div>
+
+    <a routerLink="/tarefas/nova" class="btn btn-primary nova-tarefa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      Nova tarefa
+    </a>
+
+    </div>
+
   </div>
 
 </header>
@@ -40,3 +91,7 @@
 <main>
   <router-outlet />
 </main>
+
+<footer class="rodape">
+  <p>Os Rapazes da Noite · Desenvolvimento Frontend 2026.2</p>
+</footer>

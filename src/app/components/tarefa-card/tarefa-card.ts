@@ -1,6 +1,7 @@
 
 import {
   Component,
+  computed,
   inject,
   input,
   output,
@@ -9,6 +10,7 @@ import {
 
 import { RouterLink } from '@angular/router';
 import { Api } from '../../services/api';
+import { FaseLua } from '../fase-lua/fase-lua';
 
 import type {
   Prioridade,
@@ -18,7 +20,7 @@ import type {
 
 @Component({
   selector: 'app-tarefa-card',
-  imports: [RouterLink],
+  imports: [RouterLink, FaseLua],
   templateUrl: './tarefa-card.html',
   styleUrl: './tarefa-card.css',
 })
@@ -42,6 +44,19 @@ export class TarefaCard {
   excluindo = signal(false);
 
   erro = signal<string | null>(null);
+
+  // Prazo vencido e tarefa ainda não concluída
+  readonly atrasada = computed(() => {
+    const t = this.tarefa();
+    if (t.status === 'concluida' || !t.prazo) return false;
+    const hoje = new Date();
+    const hojeIso = [
+      hoje.getFullYear(),
+      String(hoje.getMonth() + 1).padStart(2, '0'),
+      String(hoje.getDate()).padStart(2, '0'),
+    ].join('-');
+    return t.prazo < hojeIso;
+  });
 
   // Status disponíveis
   statusDisponiveis: {

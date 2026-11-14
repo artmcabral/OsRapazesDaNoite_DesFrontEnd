@@ -1,7 +1,20 @@
 
 <section>
 
-  <h2>Tarefas</h2>
+  <header class="topo">
+    <p class="sobretitulo">Todas as tarefas</p>
+    <h2>Tarefas</h2>
+
+    <!-- Legenda: cada status é uma fase da lua -->
+    <ul class="legenda" aria-label="Legenda dos status">
+      @for (item of legenda; track item.status) {
+        <li>
+          <app-fase-lua [status]="item.status" [tamanho]="16" />
+          {{ item.rotulo }}
+        </li>
+      }
+    </ul>
+  </header>
 
   <!-- Barra de busca e filtros -->
   <app-barra-filtros />
@@ -53,7 +66,7 @@
 
   } @else {
 
-    <p>
+    <p role="status">
       {{ tarefasFiltradas().length }} tarefa(s) encontrada(s).
     </p>
 

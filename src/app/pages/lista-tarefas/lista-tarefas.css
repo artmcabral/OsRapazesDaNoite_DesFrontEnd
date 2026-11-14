@@ -29,3 +29,39 @@ section > p {
     grid-template-columns: 1fr;
   }
 }
+
+/* Cabeçalho da página */
+.topo {
+  margin-bottom: 1.5rem;
+}
+
+.topo h2 {
+  margin: 0.25rem 0 0.75rem;
+}
+
+.sobretitulo {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+}
+
+/* Legenda das fases da lua */
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+}
+
+.legenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}

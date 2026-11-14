@@ -2,7 +2,78 @@
 .pagina-quadro {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem;
+}
+
+/* Cabeçalho da página com o progresso da equipe */
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.topo h2 {
+  margin: 0.25rem 0 0.4rem;
+}
+
+.sobretitulo {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.progresso {
+  min-width: 280px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.progresso-texto {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+}
+
+.progresso-texto strong {
+  color: var(--cor-primaria-texto);
+}
+
+.progresso-barra {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cor-borda);
+  overflow: hidden;
+}
+
+.progresso-barra span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--cor-primaria);
+  box-shadow: 0 0 12px var(--brilho-estrela);
+  transition: width 0.4s ease;
+}
+
+.resumo {
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
 }
 
 /* Organização das quatro colunas */
@@ -10,63 +81,51 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   align-items: start;
 }
 
 /* Aparência das colunas */
 .coluna {
-  --cor-coluna: var(--status-a-fazer, #64748b);
-
-  background: #eaeeec;
-  border-radius: var(--raio-lg, 10px);
-  padding: 1rem;
+  background: var(--cor-coluna);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  padding: 0.9rem;
   min-height: 420px;
   min-width: 0;
-
-  border-top: 4px solid var(--cor-coluna);
-}
-
-/* Cores diferentes para cada status */
-.coluna:nth-child(1) {
-  --cor-coluna: var(--status-a-fazer, #64748b);
-}
-
-.coluna:nth-child(2) {
-  --cor-coluna: var(--status-em-andamento, #3b82f6);
-}
-
-.coluna:nth-child(3) {
-  --cor-coluna: var(--status-em-revisao, #eab308);
-}
-
-.coluna:nth-child(4) {
-  --cor-coluna: var(--status-concluida, #22c55e);
 }
 
 /* Títulos das colunas */
 .coluna h3 {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-
-  margin: 0.25rem 0 1rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-
-  color: var(--cor-texto-suave, #57606a);
+  gap: 0.6rem;
+  margin: 0.25rem 0 0.15rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cor-texto);
 }
 
-/* Indicador colorido do status */
-.coluna h3::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--cor-coluna);
+/* Quantidade de tarefas na coluna */
+.contador {
+  margin-left: auto;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 0.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--cor-superficie-2);
+  font-family: var(--fonte);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Nome da fase da lua */
+.fase {
+  margin: 0 0 0.9rem;
+  font-size: 0.75rem;
+  color: var(--cor-texto-fraco);
 }
 
 /* Lista de cartões */
@@ -74,7 +133,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
   list-style: none;
   margin: 0;
   padding: 0;
@@ -87,13 +145,12 @@
 
 /* Mensagem para colunas vazias */
 .vazio {
-  color: var(--cor-texto-fraco, #57606a);
+  color: var(--cor-texto-fraco);
   font-size: 0.85rem;
   text-align: center;
-
-  padding: 1.5rem 1rem;
-  border: 1px dashed var(--cor-borda-forte, #d0d7de);
-  border-radius: var(--raio-md, 8px);
+  padding: 1.75rem 1rem;
+  border: 1px dashed var(--cor-borda-forte);
+  border-radius: var(--raio-md);
 }
 
 /* ISSUE #39: Responsividade para tablets (2 colunas) */
@@ -114,5 +171,10 @@
 
   .coluna {
     min-height: auto;
+  }
+
+  .progresso {
+    width: 100%;
+    min-width: 0;
   }
 }

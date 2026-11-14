@@ -15,8 +15,9 @@ import { BarraFiltros } from '../../components/barra-filtros/barra-filtros';
 import { Carregando } from '../../components/carregando/carregando';
 import { MensagemErro } from '../../components/mensagem-erro/mensagem-erro';
 import { EstadoVazio } from '../../components/estado-vazio/estado-vazio';
+import { FaseLua } from '../../components/fase-lua/fase-lua';
 
-import type { Tarefa } from '../../../tipos';
+import type { Status, Tarefa } from '../../../tipos';
 import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
 
 @Component({
@@ -27,6 +28,7 @@ import { FILTROS_INICIAIS, filtrarTarefas } from '../../../derivar';
     Carregando,
     MensagemErro,
     EstadoVazio,
+    FaseLua,
     RouterLink
   ],
   templateUrl: './lista-tarefas.html',
@@ -40,6 +42,14 @@ export class ListaTarefas implements OnInit {
   tarefas = signal<Tarefa[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
+
+  // Legenda das fases da lua
+  readonly legenda: { status: Status; rotulo: string }[] = [
+    { status: 'a-fazer', rotulo: 'A fazer' },
+    { status: 'em-andamento', rotulo: 'Em andamento' },
+    { status: 'em-revisao', rotulo: 'Em revisão' },
+    { status: 'concluida', rotulo: 'Concluída' },
+  ];
 
   readonly tarefasFiltradas = computed(() =>
     filtrarTarefas(

@@ -1,7 +1,34 @@
 
 <section class="pagina-quadro">
 
-  <h2>Quadro de tarefas (Kanban)</h2>
+  <header class="topo">
+    <div>
+      <p class="sobretitulo">Gerenciador de Tarefas Acadêmicas</p>
+      <h2>Quadro de tarefas</h2>
+      <p class="subtitulo">
+        Cada coluna é uma fase da lua — da lua nova (a fazer) à lua cheia (concluída).
+      </p>
+    </div>
+
+    @if (!carregando() && !erro() && tarefas().length > 0) {
+      <div class="progresso">
+        <div class="progresso-texto">
+          <span>Progresso da equipe</span>
+          <strong>{{ totalConcluidas() }} de {{ tarefas().length }} concluídas</strong>
+        </div>
+        <div
+          class="progresso-barra"
+          role="progressbar"
+          aria-label="Progresso da equipe"
+          [attr.aria-valuenow]="percentualConcluido()"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <span [style.width.%]="percentualConcluido()"></span>
+        </div>
+      </div>
+    }
+  </header>
 
   <!-- Filtros compartilhados -->
   <app-barra-filtros />
@@ -53,7 +80,7 @@
 
   } @else {
 
-    <p>
+    <p class="resumo" role="status">
       {{ tarefasFiltradas().length }}
       tarefa(s) encontrada(s).
     </p>
@@ -65,9 +92,11 @@
         <section class="coluna">
 
           <h3>
-            {{ coluna.titulo }}
-            ({{ tarefasDaColuna(coluna.status).length }})
+            <app-fase-lua [status]="coluna.status" />
+            <span>{{ coluna.titulo }}</span>
+            <span class="contador">{{ tarefasDaColuna(coluna.status).length }}</span>
           </h3>
+          <p class="fase">{{ coluna.fase }}</p>
 
           <ul class="lista-coluna">
 
@@ -87,7 +116,7 @@
             } @empty {
 
               <li class="vazio">
-                Nenhuma tarefa nesta coluna.
+                Nenhuma tarefa nesta fase.
               </li>
 
             }

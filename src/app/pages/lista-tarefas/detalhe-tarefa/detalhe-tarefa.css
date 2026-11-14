@@ -15,7 +15,7 @@
 }
 
 .voltar:hover {
-  color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
 }
 
 .cartao-detalhe {
